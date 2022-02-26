@@ -1,0 +1,23 @@
+Guild Commands:
+  ===> /guild menu - Opens the Guild Menu
+  OPTIONS:
+    => GUI Clicking
+
+  ===> /guild motd - Modifies the MOTD for the Guild
+  OPTIONS: 
+    => add <text> - Adds a line in the MOTD
+    => clear - Clears the MOTD
+    => help - Prints this help message
+    => list - List lines in the MOTD
+    => preview - Preview what the MOTD will look like to players
+    => set <line> <text> - Sets a line in the MOTD
+
+  ===> /guild officerchat - Send a chat message to your guild officer chat channel
+  TODO:
+    => Split chat bridge
+
+  ===> /guild settings <setting> <value> - Modify settings for your guild
+  OPTIONS:
+    => SHOWN
+    => DESCRIPTION
+    => GAMES
