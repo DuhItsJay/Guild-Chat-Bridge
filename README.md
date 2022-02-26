@@ -1,6 +1,9 @@
 # Senither's Hypixel Discord Chat Bridge
 
 <p align="center">
+<a img="https://img.shields.io/maintenance/yes/2022" href="https://github.com/DuhItsJay/Guild-Chat-Bridge#readme"></a> |
+  <a href="#">Link 2</a> |
+  <a href="#">Link 3</a>
 [![Maintainence](https://img.shields.io/maintenance/yes/2022)](https://github.com/DuhItsJay/Guild-Chat-Bridge#readme) [![GitHub License](https://img.shields.io/github/license/DuhItsJay/Guild-Chat-Bridge)](https://github.com/DuhItsJay/Guild-Chat-Bridge/blob/main/LICENSE) [![Build Pass](https://img.shields.io/github/workflow/status/DuhItsJay/Guild-Chat-Bridge/CI)](https://github.com/DuhItsJay/Guild-Chat-Bridge/actions/workflows/npm-publish.yml?query=workflow%3A%22CI%22)
 </p>
 
