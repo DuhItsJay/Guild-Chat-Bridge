@@ -1,12 +1,10 @@
 # Senither's Hypixel Discord Chat Bridge
 
 <p align="center">
-  <img src="https://img.shields.io/maintenance/yes/2022">
-  <img src="https://github.com/DuhItsJay/Guild-Chat-Bridge/blob/main/LICENSE" href="https://img.shields.io/github/license/DuhItsJay/Guild-Chat-Bridge">
-  <img src="">
+<a href="https://github.com/DuhItsJay/Guild-Chat-Bridge#readme"><img src="https://img.shields.io/maintenance/yes/2022"></a>
+<a href="https://img.shields.io/github/license/DuhItsJay/Guild-Chat-Bridge"><img src="https://github.com/DuhItsJay/Guild-Chat-Bridge/blob/main/LICENSE"></a>
+<a href="https://github.com/DuhItsJay/Guild-Chat-Bridge/actions/workflows/npm-publish.yml?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/DuhItsJay/Guild-Chat-Bridge/CI"></a>
 </p>
-[![Maintainence](https://img.shields.io/maintenance/yes/2022)](https://github.com/DuhItsJay/Guild-Chat-Bridge#readme) [![GitHub License](https://img.shields.io/github/license/DuhItsJay/Guild-Chat-Bridge)](https://github.com/DuhItsJay/Guild-Chat-Bridge/blob/main/LICENSE) [![Build Pass](https://img.shields.io/github/workflow/status/DuhItsJay/Guild-Chat-Bridge/CI)](https://github.com/DuhItsJay/Guild-Chat-Bridge/actions/workflows/npm-publish.yml?query=workflow%3A%22CI%22)
-</center>
 
 [![Discord](./AstralsBannerGIF.gif)](https://discord.gg/astrals)
 
