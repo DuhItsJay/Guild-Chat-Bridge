@@ -1,7 +1,3 @@
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-
-<a class="github-button" href="https://github.com/DuhItsJay/Guild-Chat-Bridge" data-show-count="true" aria-label="Star DuhItsJay/Guild-Chat-Bridge on GitHub">Star</a>
-
 # Senither's Hypixel Discord Chat Bridge
 
 > The Hypixel Bridge Chat application by Senither seems to have been dormant for a while, so I took it upon myself to continue adding more features and making the display cleaner.
@@ -138,18 +134,36 @@ The `authentication` option is the key which you can put in the header or query 
 
 - `!help` - Displays the list of commands (`!h`)
 - `!relog [delay]` - Relogs the MC client, a delay can be given in seconds, if no delay is given it will default to 5 seconds (`!r`)
+
 - `!override <command> [args]` - Executes the string attached. This is a dangerous permission to grant (`!o`, `!or`)
+
+- `!demote <user>` - Demotes the specified user by 1 rank (`!d`, `!down`)
 - `!invite <player>` - Invites the specified user to the guild, providing the guild isn't full (`!i`, `!inv`)
 - `!kick <user> [reason]` - Kicks the specified user from the guild (`!k`)
+- `!member <user>` - Gets GEXP info for the specified user (`!mem`)
+- `!mute [user] [time]` - Mutes the specified user or the whole guild for the given amount of time (`!m`)
 - `!promote <user>` - Promotes the specified user by 1 rank (`!p`, `!up`)
-- `!demote <user>` - Demotes the specified user by 1 rank (`!d`, `!down`)
+- `!setrank <user> <rank>` - Promotes/Demotes the specified user to the given rank (`!sr`, `!rank`)
+- `!unmute [user]` - Unmutes the specified user or the whole guild (`!un`, `!um`)
+
+- `!discord [discord link]` - View or Set the discord link for the guild
+- `HistoryCommand`
+- `InfoCommand`
+- `LogCommand`
+- `MemberListCommand`
+- `NotificationCommand`
+- `OnlineCommand`
+- `OnlinemodeCommand`
+- `QuestCommand`
+- `RelogCommand`
+- `SlowmodeCommand`
+- `TagCommand`
+- `TopCommand`
 
 ### Roadmap
 
 - [ ] Chat message filter
-  - The filter should block any messages sent from Discord to Hypixel that contains banable words, and words that could potentially cause a mute.
-- [ ] Log guild events
-  - Guild joins/leaves/kicks, mutes/unmutes and promotion/demotions
+  - The filter should block any messages sent from Discord to Hypixel that contains bannable words, and words that could potentially cause a mute.
 - [ ] Ingame commands
   - Add commands for players to use ingame to check other player stats (eg `!skills <ign>`, `!weight <ign>` etc)
 - [ ] Add support for officer chat
