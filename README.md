@@ -2,7 +2,7 @@
 
 [![Maintainence](https://img.shields.io/maintenance/yes/2022)](https://github.com/DuhItsJay/Guild-Chat-Bridge#readme) [![GitHub License](https://img.shields.io/github/license/DuhItsJay/Guild-Chat-Bridge)](https://github.com/DuhItsJay/Guild-Chat-Bridge/blob/main/LICENSE) [![Build Pass](https://img.shields.io/github/workflow/status/DuhItsJay/Guild-Chat-Bridge/CI)](https://github.com/DuhItsJay/Guild-Chat-Bridge/actions/workflows/npm-publish.yml?query=workflow%3A%22CI%22)
 
-![Discord](https://imgur.com/a/p5elkPT)
+![Discord](../The-Astrals/guild_art/AstralsBannerGIF.gif)
 
 > The Hypixel Bridge Chat application by Senither seems to have been dormant for a while, so I took it upon myself to continue adding more features and making the display cleaner.
 
