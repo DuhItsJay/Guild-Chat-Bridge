@@ -1,3 +1,5 @@
+![Test](https://img.shields.io/github/license/DuhItsJay/Guild-Chat-Bridge)
+
 # Senither's Hypixel Discord Chat Bridge
 
 > The Hypixel Bridge Chat application by Senither seems to have been dormant for a while, so I took it upon myself to continue adding more features and making the display cleaner.
