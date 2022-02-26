@@ -1,3 +1,5 @@
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
 <a class="github-button" href="https://github.com/DuhItsJay/Guild-Chat-Bridge" data-show-count="true" aria-label="Star DuhItsJay/Guild-Chat-Bridge on GitHub">Star</a>
 
 # Senither's Hypixel Discord Chat Bridge
