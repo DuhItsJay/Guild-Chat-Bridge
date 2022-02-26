@@ -1,0 +1,30 @@
+{
+	"name": "hypixel-discord-chat-bridge",
+	"version": "1.0.0",
+	"description": "A Hypixel guild chat and Discord chat bridge == This is a continuation of Senither's chat bridge. Credit for initial work to Senither",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DuhItsJay/Guild-Chat-Bridge.git"
+	},
+	"keywords": [
+		"hypixel",
+		"discord",
+		"chat",
+		"bridge"
+	],
+	"author": "Jay (Some-Random-Guy-v2#3421)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/DuhItsJay/Guild-Chat-Bridge/issues"
+	},
+	"homepage": "https://github.com/DuhItsJay/Guild-Chat-Bridge#readme",
+	"dependencies": {
+		"chalk": "^4.1.0",
+		"discord.js-light": "^3.5.0",
+		"mineflayer": "^3.0.0"
+	}
+}
