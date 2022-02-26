@@ -1,4 +1,4 @@
-![Test](https://img.shields.io/github/license/DuhItsJay/Guild-Chat-Bridge)
+![GitHub License](https://img.shields.io/github/license/DuhItsJay/Guild-Chat-Bridge)
 
 # Senither's Hypixel Discord Chat Bridge
 
