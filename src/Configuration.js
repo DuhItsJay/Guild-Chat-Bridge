@@ -22,6 +22,7 @@ class Configuration {
 		},
 	}
 
+	//Overwriting values from config.json onto defined properties
 	environmentOverrides = {
 		SERVER_HOST: val => (this.properties.server.host = val),
 		SERVER_PORT: val => (this.properties.server.port = val),
