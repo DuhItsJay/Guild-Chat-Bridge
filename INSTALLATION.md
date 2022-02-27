@@ -1,7 +1,5 @@
 # Using/Building Guild Chat Bridge
 
-<hr>
-
 ## Table of Content
 
 - [Installation using NodeJS](#installation-using-nodejs)
