@@ -45,9 +45,11 @@ See [INSTALLATION.md](./INSTALLATION.md) for instructions on how to install and 
 
 ## What's New
 
-> This is a summary of what the latest version offers!
+This is a summary of what the latest version offers!
 
 ## Features
+
+> Coming Soon
 
 ## Commands
 
