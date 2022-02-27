@@ -2,33 +2,32 @@
 
 Continuation of the [Senither Hypixel Chat Bridge](https://github.com/Senither/hypixel-discord-chat-bridge)
 
+A two-way chat bridge between [Hypixel](https://hypixel.net/) guild chat and a [Discord](https://discord.com/) channel.
+
+The application utilizes [Discord.js-light](https://github.com/timotejroiko/discord.js-light) for communicating with Discord, and [Mineflayer](https://github.com/PrismarineJS/mineflayer) for communicating with Hypixel.
+
+> This application will login to Hypixel using Mineflayer which is not a normal Minecraft client, this could result in your Minecraft account getting banned from Hypixel, so use this application at your own risk.
+
 <p align="center">
 <a href="https://github.com/DuhItsJay/Guild-Chat-Bridge#readme"><img src="https://img.shields.io/maintenance/yes/2022"></a>
 <a href="https://github.com/DuhItsJay/Guild-Chat-Bridge/blob/main/LICENSE"><img src="https://img.shields.io/github/license/DuhItsJay/Guild-Chat-Bridge"></a>
 <a href="https://github.com/DuhItsJay/Guild-Chat-Bridge/actions/workflows/npm-publish.yml?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/DuhItsJay/Guild-Chat-Bridge/CI"></a>
 </p>
 
-# Senither's Hypixel Discord Chat Bridge
-
-A two-way chat bridge between [Hypixel](https://hypixel.net/) guild chat and a [Discord](https://discord.com/) channel. The application utilizes [Discord.js-light](https://github.com/timotejroiko/discord.js-light) for communicating with Discord, and [Mineflayer](https://github.com/PrismarineJS/mineflayer) for communicating with Hypixel.
-
-> This application will login to Hypixel using Mineflayer which is not a normal Minecraft client, this could result in your Minecraft account getting banned from Hypixel, so use this application at your own risk.
-
 <hr>
 
-## Table of Content
+# Table of Content
 
 - [Installation/Usage Guide](#installationusage-guilde)
 - [Commands](#commands)
 - [Roadmap](#roadmap)
 - [License](#license)
 
-### Installation/Usage Guide
+## Installation/Usage Guide
 
-<hr>
 See [INSTALLATION.md](./INSTALLATION.md) for instructions on how to install and use the Guild Bridge Chat from the source code
 
-### Commands
+## Commands
 
 `< >` = Required arguments, `[ ]` Optional arguments
 
@@ -60,7 +59,7 @@ See [INSTALLATION.md](./INSTALLATION.md) for instructions on how to install and 
 - `TagCommand`
 - `TopCommand`
 
-### Roadmap
+## Roadmap
 
 - [ ] Guild Commands:
 
