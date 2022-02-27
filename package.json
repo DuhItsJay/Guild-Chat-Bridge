@@ -1,7 +1,7 @@
 {
 	"name": "hypixel-discord-chat-bridge",
 	"version": "1.0.0",
-	"description": "A Hypixel guild chat and Discord chat bridge == This is a continuation of Senither's chat bridge. Credit for initial work to Senither",
+	"description": "A Hypixel guild chat and Discord chat bridge ==> This is a continuation of Senither's chat bridge. Credit for initial work to Senither",
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js"
