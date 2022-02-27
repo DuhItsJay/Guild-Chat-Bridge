@@ -174,25 +174,22 @@ The `authentication` option is the key which you can put in the header or query 
 
   - /guild menu - Opens the Guild Menu
 
-    - OPTIONS:
-      => GUI Clicking
-      => Still in consideration (possibly bannable)
+    - GUI Clicking
+    - Still in consideration (possibly bannable)
 
   - /guild motd - Modifies the MOTD for the Guild
 
-    - OPTIONS:
-      => add <text> - Adds a line in the MOTD
-      => clear - Clears the MOTD
-      => help - Prints this help message
-      => list - List lines in the MOTD
-      => preview - Preview what the MOTD will look like to players
-      => set <line> <text> - Sets a line in the MOTD
+    - add `<text>` - Adds a line in the MOTD
+    - clear - Clears the MOTD
+    - help - Prints this help message
+    - list - List lines in the MOTD
+    - preview - Preview what the MOTD will look like to players
+    - set `<line>` `<text>` - Sets a line in the MOTD
 
-  - /guild settings <setting> <value> - Modify settings for your guild
-    - OPTIONS:
-      => SHOWN
-      => DESCRIPTION
-      => GAMES
+  - /guild settings `<setting>` `<value>` - Modify settings for your guil
+    - SHOWN
+    - DESCRIPTION
+    - GAMES
 
 - [ ] Chat message filter
   - The filter should block any messages sent from Discord to Hypixel that contains bannable words, and words that could potentially cause a mute.
