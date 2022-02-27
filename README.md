@@ -1,4 +1,5 @@
 <p align="center">
+<a href="https://github.com/DuhItsJay/Guild-Chat-Bridge/commit/main"><img src="https://img.shields.io/github/last-commit/DuhItsJay/Guild-Chat-Bridge"></a>
 <a href="https://github.com/DuhItsJay/Guild-Chat-Bridge#readme"><img src="https://img.shields.io/maintenance/yes/2022"></a>
 <a href="https://github.com/DuhItsJay/Guild-Chat-Bridge/blob/main/LICENSE"><img src="https://img.shields.io/github/license/DuhItsJay/Guild-Chat-Bridge"></a>
 <a href="https://github.com/DuhItsJay/Guild-Chat-Bridge/actions/workflows/npm-publish.yml?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/DuhItsJay/Guild-Chat-Bridge/CI"></a>
