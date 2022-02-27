@@ -19,11 +19,16 @@ The application utilizes [Discord.js-light](https://github.com/timotejroiko/disc
 
 # Table of Content
 
+- [Support]()
 - [Installation/Usage Guide](#installationusage-guilde)
 - [What's New](#whats-new)
 - [Commands](#commands)
 - [Roadmap](#roadmap)
 - [License](#license)
+
+## Support
+
+Looking for help? Open an [issue](https://github.com/DuhItsJay/Guild-Chat-Bridge/issues) or get a hold of me in our [support server](https://discord.gg/rjjj9BFV2D)!
 
 ## Installation/Usage Guide
 
