@@ -20,6 +20,7 @@ The application utilizes [Discord.js-light](https://github.com/timotejroiko/disc
 # Table of Content
 
 - [Installation/Usage Guide](#installationusage-guilde)
+- [What's New](#whats-new)
 - [Commands](#commands)
 - [Roadmap](#roadmap)
 - [License](#license)
@@ -27,6 +28,10 @@ The application utilizes [Discord.js-light](https://github.com/timotejroiko/disc
 ## Installation/Usage Guide
 
 See [INSTALLATION.md](./INSTALLATION.md) for instructions on how to install and use the Guild Bridge Chat from the source code
+
+## What's New
+
+> This is a summary of what the latest version offers!
 
 ## Commands
 
