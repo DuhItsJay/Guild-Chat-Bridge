@@ -12,8 +12,8 @@
 	"discord": {
 		"token": "discordBotToken",
 		"channel": "channelId",
-		"commandRole": "roleId",
-		"overrideRole": "ownerId",
+		"commandRole": "roleId (staff or similar)",
+		"overrideRole": "roleId(admin or similar)/ownerId",
 		"prefix": "!",
 		"messageMode": "bot"
 	}
