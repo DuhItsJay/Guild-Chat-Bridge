@@ -8,10 +8,15 @@ class CommandHandler {
 		this.prefix = discord.app.config.discord.prefix
 
 		this.commands = new Collection()
-		let commandFiles = fs.readdirSync('./src/discord/commands').filter(file => file.endsWith('.js'))
-		for (const file of commandFiles) {
-			const command = new (require(`./commands/${file}`))(discord)
-			this.commands.set(command.name, command)
+		let directories = fs.readdirSync('./src/discord/commands')
+
+		for (const dir of directories) {
+			let commandFiles = fs.readdirSync(`./src/discord/commands/${dir}`).filter(file => file.endsWith('.js'))
+
+			for (const file of commandFiles) {
+				const command = new (require(`./commands/${dir}/${file}`))(discord)
+				this.commands.set(command.name, command)
+			}
 		}
 	}
 

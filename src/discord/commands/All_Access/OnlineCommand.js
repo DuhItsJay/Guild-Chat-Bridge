@@ -1,4 +1,4 @@
-const DiscordCommand = require('../../contracts/DiscordCommand')
+const DiscordCommand = require('../../../contracts/DiscordCommand')
 
 class OnlineCommand extends DiscordCommand {
 	constructor(discord) {

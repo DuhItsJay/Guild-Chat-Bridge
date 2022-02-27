@@ -1,4 +1,4 @@
-const DiscordCommand = require('../../contracts/DiscordCommand')
+const DiscordCommand = require('../../../contracts/DiscordCommand')
 
 class LogCommand extends DiscordCommand {
 	constructor(discord) {

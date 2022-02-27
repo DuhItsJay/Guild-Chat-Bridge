@@ -1,4 +1,4 @@
-const DiscordCommand = require('../../contracts/DiscordCommand')
+const DiscordCommand = require('../../../contracts/DiscordCommand')
 
 class HistoryCommand extends DiscordCommand {
 	constructor(discord) {

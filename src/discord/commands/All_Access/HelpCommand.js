@@ -1,6 +1,6 @@
-const DiscordCommand = require('../../contracts/DiscordCommand')
+const DiscordCommand = require('../../../contracts/DiscordCommand')
 
-const { version } = require('../../../package.json')
+const { version } = require('../../../../package.json')
 
 class HelpCommand extends DiscordCommand {
 	constructor(discord) {
