@@ -47,6 +47,8 @@ See [INSTALLATION.md](./INSTALLATION.md) for instructions on how to install and 
 
 This is a summary of what the latest version offers!
 
+Previous Versions: [CHANGELOG.md](./CHANGELOG.md)
+
 ## Features
 
 > Coming Soon
