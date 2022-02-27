@@ -22,7 +22,11 @@ The application utilizes [Discord.js-light](https://github.com/timotejroiko/disc
 - [Support]()
 - [Installation/Usage Guide](#installationusage-guilde)
 - [What's New](#whats-new)
+- [Features](#features)
 - [Commands](#commands)
+  - [Bot](#bot)
+  - [Member](#member)
+  - [Guild Info/Logs](#guild)
 - [Roadmap](#roadmap)
 - [License](#license)
 
@@ -38,14 +42,20 @@ See [INSTALLATION.md](./INSTALLATION.md) for instructions on how to install and 
 
 > This is a summary of what the latest version offers!
 
+## Features
+
 ## Commands
 
 `< >` = Required arguments, `[ ]` Optional arguments
 
+### Bot
+
 - `!help` - Displays the list of commands (`!h`)
 - `!relog [delay]` - Relogs the MC client, a delay can be given in seconds, if no delay is given it will default to 5 seconds (`!r`)
-
+  ` `
 - `!override <command> [args]` - Executes the string attached. This is a dangerous permission to grant (`!o`, `!or`)
+
+### Member
 
 - `!demote <user>` - Demotes the specified user by 1 rank (`!d`, `!down`)
 - `!invite <player>` - Invites the specified user to the guild, providing the guild isn't full (`!i`, `!inv`)
@@ -55,6 +65,8 @@ See [INSTALLATION.md](./INSTALLATION.md) for instructions on how to install and 
 - `!promote <user>` - Promotes the specified user by 1 rank (`!p`, `!up`)
 - `!setrank <user> <rank>` - Promotes/Demotes the specified user to the given rank (`!sr`, `!rank`)
 - `!unmute [user]` - Unmutes the specified user or the whole guild (`!un`, `!um`)
+
+### Guild
 
 - `!discord [discord link]` - View or Set the discord link for the guild
 - `HistoryCommand`
