@@ -6,7 +6,8 @@
 <a href="https://github.com/DuhItsJay/Guild-Chat-Bridge/actions/workflows/npm-publish.yml?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/DuhItsJay/Guild-Chat-Bridge/CI"></a>
 </p>
 
-The Hypixel Bridge Chat application by Senither seems to have been dormant for a while, so I took it upon myself to continue adding more features and making the display cleaner.
+# The Hypixel Bridge Chat application by Senither seems to have been dormant for a while, so I took it upon myself to continue adding more features and making the display cleaner.
+
 [![Discord](./AstralsBannerGIF.gif)](https://discord.gg/astrals)
 
 A two-way chat bridge between [Hypixel](https://hypixel.net/) guild chat and a [Discord](https://discord.com/) channel. The application utilizes [Discord.js-light](https://github.com/timotejroiko/discord.js-light) for communicating with Discord, and [Mineflayer](https://github.com/PrismarineJS/mineflayer) for communicating with Hypixel.
