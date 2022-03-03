@@ -1,14 +1,13 @@
 const EventHandler = require('../../contracts/EventHandler')
 
-var collect = false
-var message_collection = []
-
 class StateHandler extends EventHandler {
 	constructor(minecraft, command) {
 		super()
 
 		this.minecraft = minecraft
 		this.command = command
+		this.collect = false
+		this.message_collection = []
 	}
 
 	registerEvents(bot) {
@@ -23,6 +22,10 @@ class StateHandler extends EventHandler {
 		if (this.isLobbyJoinMessage(message)) {
 			this.minecraft.app.log.minecraft('Sending Minecraft client to limbo')
 			return this.bot.chat('/ac §')
+		}
+
+		if (this.isFailedChatMessage(message)) {
+			return
 		}
 
 		if (this.isLoginMessage(message)) {
@@ -109,6 +112,32 @@ class StateHandler extends EventHandler {
 			return this.minecraft.broadcastCleanEmbed({ message: `${username} was demoted to ${newRank}`, color: 'F04947' })
 		}
 
+		if (this.isLowestRank(message)) {
+			let user = message
+				.replace(/\[(.*?)\]/g, '')
+				.trim()
+				.split(' ')[0]
+
+			return this.minecraft.broadcastCleanEmbed({ message: `${user} is already the lowest guild rank!`, color: 'DC143C' })
+		}
+
+		if (this.isSetrankFail(message)) {
+			return this.minecraft.broadcastCleanEmbed({ message: `Rank not found.`, color: 'DC143C' })
+		}
+
+		if (this.isAlreadyHasRank(message)) {
+			return this.minecraft.broadcastCleanEmbed({ message: `They already have that rank!`, color: 'DC143C' })
+		}
+
+		if (this.isNotInGuild(message)) {
+			let user = message
+				.replace(/\[(.*?)\]/g, '')
+				.trim()
+				.split(' ')[0]
+
+			return this.minecraft.broadcastCleanEmbed({ message: `${user} is not in the guild.`, color: 'DC143C' })
+		}
+
 		if (this.isBlockedMessage(message)) {
 			let blockedMsg = message.match(/".+"/g)[0].slice(1, -1)
 
@@ -186,38 +215,12 @@ class StateHandler extends EventHandler {
 			return this.minecraft.broadcastCleanEmbed({ message: `${user} has been unmuted!`, color: '47F049' })
 		}
 
-		if (this.isSetrankFail(message)) {
-			return this.minecraft.broadcastCleanEmbed({ message: `Rank not found.`, color: 'DC143C' })
-		}
-
 		if (this.isAlreadyMuted(message)) {
 			return this.minecraft.broadcastCleanEmbed({ message: `This user is already muted!`, color: 'DC143C' })
 		}
 
 		if (this.isSlowMessage(message)) {
-			return this.minecraft.broadcastCleanEmbed({ message: message.replace('Guild >', ''), color: '6495ED' })
-		}
-
-		if (this.isNotInGuild(message)) {
-			let user = message
-				.replace(/\[(.*?)\]/g, '')
-				.trim()
-				.split(' ')[0]
-
-			return this.minecraft.broadcastCleanEmbed({ message: `${user} is not in the guild.`, color: 'DC143C' })
-		}
-
-		if (this.isLowestRank(message)) {
-			let user = message
-				.replace(/\[(.*?)\]/g, '')
-				.trim()
-				.split(' ')[0]
-
-			return this.minecraft.broadcastCleanEmbed({ message: `${user} is already the lowest guild rank!`, color: 'DC143C' })
-		}
-
-		if (this.isAlreadyHasRank(message)) {
-			return this.minecraft.broadcastCleanEmbed({ message: `They already have that rank!`, color: 'DC143C' })
+			return this.minecraft.broadcastCleanEmbed({ message: message.replace('Guild >', ''), color: 'DC143C' })
 		}
 
 		if (this.isTooFast(message)) {
@@ -230,60 +233,13 @@ class StateHandler extends EventHandler {
 			return this.minecraft.broadcastCleanEmbed({ message: `Player \`${user}\` not found.`, color: 'DC143C' })
 		}
 
-		if (this.isHistoryMessage(message)) {
+		if (this.isNoHistoryMessage(message)) {
 			return this.minecraft.broadcastCleanEmbed({ message: 'There is no recent history to display.', color: '6495ED' })
-		}
-
-		if (this.isDiscordMessage(message)) {
-			return this.minecraft.broadcastCleanEmbed({
-				message: message
-					.split('\n')
-					.filter(line => line != '-----------------------------------------------------', '')
-					.join('\n'),
-				color: '6495ED',
-			})
-		}
-
-		if (this.isAuditLogMessage(message)) {
-			return this.minecraft.broadcastCleanEmbed({
-				message: message
-					.split('\n')
-					.filter(line => line != '-----------------------------------------------------', '')
-					.join('\n'),
-				color: '6495ED',
-			})
 		}
 
 		if (this.isNoGEXPMessage(message)) {
 			return this.minecraft.broadcastCleanEmbed({ message: message, color: '6495ED' })
 		}
-
-		if (this.isPageError(message)) {
-			return this.minecraft.broadcastCleanEmbed({
-				message: message,
-				color: 'DC143C',
-			})
-		}
-		if (!this.isGuildMessage(message) || !this.isOfficerMessage(message)) {
-			if (this.isEmbededMessage(message)) {
-				collect = !collect
-				if (message_collection.length != 0) {
-					if (this.isPartyInvite(message_collection)) {
-						return (message_collection = [])
-					}
-
-					if (this.isFriendRequest(message_collection)) {
-						return (message_collection = [])
-					}
-
-					this.minecraft.broadcastCleanEmbed({ message: message_collection.join('\n'), color: '6495ED' })
-					return (message_collection = [])
-				}
-			} else if (collect) {
-				message_collection.push(message)
-			}
-		}
-		//this.minecraft.broadcastCleanEmbed({ message: message, color: '47F049' })
 
 		if (this.isGuildMessage(message)) {
 			let parts = message.split(':')
@@ -318,37 +274,37 @@ class StateHandler extends EventHandler {
 			})
 		}
 
-		if (this.isOfficerMessage(message)) {
-			let parts = message.split(':')
-			let group = parts.shift().trim()
-			let hasRank = group.endsWith(']')
-
-			let userParts = group.split(' ')
-			let username = userParts[userParts.length - (hasRank ? 2 : 1)]
-			let guildRank = userParts[userParts.length - 1].replace(/[\[\]]/g, '')
-
-			if (guildRank == username) {
-				guildRank = 'Member'
-			}
-
-			if (this.isMessageFromBot(username)) {
+		if (this.isEmbedMessage(message)) {
+			this.collect = !this.collect
+			if (this.message_collection.length == 0) {
 				return
 			}
 
-			const playerMessage = parts.join(':').trim()
-			if (playerMessage.length == 0 || this.command.handle(username, playerMessage)) {
-				return
+			if (!this.collect && this.message_collection.toString().includes('Guild')) {
+				const guildName = this.message_collection.shift().split(':').pop()
+				Object.entries(this.message_collection).forEach(str => {
+					if (str[1].includes(':')) {
+						let tempString = str[1].split(':')
+						tempString[0] = `**${tempString[0]}**`
+						tempString[1] = `\`${tempString
+							.slice(1)
+							.reduce((prev, curr) => prev + ':' + curr)
+							.trim()}\``
+
+						this.message_collection[str[0]] = tempString[0] + ':' + tempString[1]
+					}
+					if (str[1].includes('--')) {
+						let tempString = str[1].replace(/[^a-zA-Z ]/g, '').trim()
+						this.message_collection[str[0]] = `__${tempString}__`
+					}
+				})
+
+				this.minecraft.broadcastTitleEmbed({ message: this.message_collection.join('\n'), title: guildName, color: '6495ED' })
 			}
 
-			if (playerMessage == '@') {
-				return
-			}
-
-			this.minecraft.broadcastMessage({
-				username: username,
-				message: playerMessage,
-				guildRank: guildRank,
-			})
+			this.message_collection = []
+		} else if (this.collect) {
+			this.message_collection.push(message)
 		}
 	}
 
@@ -360,16 +316,25 @@ class StateHandler extends EventHandler {
 		return (message.endsWith(' the lobby!') || message.endsWith(' the lobby! <<<')) && message.includes('[MVP+')
 	}
 
+	isFailedChatMessage(message) {
+		return message == 'Missing arguments! Usage: /achat message'
+	}
+
 	isGuildMessage(message) {
 		return message.startsWith('Guild >') && message.includes(':')
 	}
 
-	isSlowMessage(message) {
-		return message.startsWith('Guild >') && message.includes('chat throttle!')
+	isOfficerMessage(message) {
+		//not implemented yet
+		return message.startsWith('Officer >') && message.includes(':')
 	}
 
-	isOfficerMessage(message) {
-		return message.startsWith('Officer >') && message.includes(':')
+	isGuildInfoMessage(message) {
+		return message.includes('Guild Name:') && message.includes(':')
+	}
+
+	isSlowMessage(message) {
+		return message.startsWith('Guild >') && message.includes('chat throttle!')
 	}
 
 	isLoginMessage(message) {
@@ -404,16 +369,20 @@ class StateHandler extends EventHandler {
 		return message.includes('We blocked your comment') && !message.includes(':')
 	}
 
-	isRepeatMessage(message) {
-		return message == 'You cannot say the same message twice!'
+	isNoGEXPMessage(message) {
+		return message.includes('No one earned guild experience') && !message.includes(':')
 	}
 
-	isHistoryMessage(message) {
-		return message == 'There is no recent history to display.'
+	isNoHistoryMessage(message) {
+		return message == 'There is no recent history to display.' && !message.includes(':')
 	}
 
 	isPageError(message) {
 		return message == 'Page must be between 1 and 4.'
+	}
+
+	isRepeatMessage(message) {
+		return message == 'You cannot say the same message twice!'
 	}
 
 	isNoPermission(message) {
@@ -500,43 +469,15 @@ class StateHandler extends EventHandler {
 	}
 
 	isPlayerNotFound(message) {
-		return message.startsWith(`Can't find a player by the name of`)
+		return message.startsWith(`Can't find a player by the name of`) && !message.includes(':')
 	}
 
-	isPartyInvite(message_col) {
-		return message_col[0].includes('to the party! They have 60 seconds to accept.')
+	isPartyInvite(message) {
+		return message.includes('has invited you to join their party!')
 	}
 
-	isFriendRequest(message_col) {
-		return (
-			message_col[0].includes(`The friend request from ${/[a-zA-Z0-9+\[\]]/g} has expired.`) ||
-			message_col[0].includes(`Friend request from ${/[a-zA-Z0-9+\[\]]/g}`)
-		)
-	}
-
-	isDiscordMessage(message) {
-		return (
-			message == "That doesn't appear to be a valid Discord invite link!" ||
-			message == `${/[a-zA-Z0-9+\[\]]/g} updated the Guild Discord invite link.` ||
-			(message.includes('-----------------------------------------------------') &&
-				message.includes('To change the link, use /guild discord (invite link) or /guild discord reset to remove it.'))
-		)
-	}
-
-	isNoGEXPMessage(message) {
-		return message.includes('No one earned guild experience')
-	}
-
-	isAuditLogMessage(message) {
-		console.log(
-			message.includes(`Guild Log (Page ${/[0-9]/g} of ${/[0-9]/g})`) && message.includes('-----------------------------------------------------'),
-			message
-		)
-		return message.includes(`Guild Log (Page ${/[0-9]/g} of ${/[0-9]/g})`) && message.includes('-----------------------------------------------------')
-	}
-
-	isEmbededMessage(message) {
-		return message.includes('-----------------------------------------------------')
+	isEmbedMessage(message) {
+		return message == '-----------------------------------------------------'
 	}
 }
 
