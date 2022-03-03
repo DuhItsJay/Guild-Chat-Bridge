@@ -32,6 +32,7 @@ class MinecraftManager extends CommunicationBridge {
 			password: this.app.config.minecraft.password,
 			version: '1.8.9',
 			auth: this.app.config.minecraft.accountType,
+			hideErrors: true,
 		})
 	}
 
