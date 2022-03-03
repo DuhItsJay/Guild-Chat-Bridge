@@ -5,7 +5,7 @@ class TopCommand extends DiscordCommand {
 		super(discord)
 
 		this.name = 'top'
-		this.aliases = []
+		this.aliases = ['t']
 		this.description = 'Shows a list of players with the highest gexp recieved today'
 	}
 
