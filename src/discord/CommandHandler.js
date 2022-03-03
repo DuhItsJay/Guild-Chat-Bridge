@@ -34,26 +34,9 @@ class CommandHandler {
 			return false
 		}
 
-		var staffCommands = [
-			'demote',
-			'notifications',
-			'tag',
-			'invite',
-			'kick',
-			'mute',
-			'promote',
-			'discord',
-			'history',
-			'log',
-			'unmute',
-			'onlinemode',
-			'setrank',
-			'relog',
-			'tagcolor',
-			'slowmode',
-		]
+		var staffCommands = fs.readdirSync('./src/discord/commands/Staff')
 
-		if ((staffCommands.includes(command.name) && !this.isCommander(message.member)) || (command.name == 'override' && !this.isOwner(message.member))) {
+		if ((command.name == 'override' && !this.isOverrideUser(message.member)) || (staffCommands.includes(command.name) && !this.isCommander(message.member))) {
 			return message.channel.send({
 				embed: {
 					description: `You don't have permission to do that.`,
@@ -72,8 +55,8 @@ class CommandHandler {
 		return member.roles.cache.find(r => r.id == this.discord.app.config.discord.commandRole)
 	}
 
-	isOwner(member) {
-		return member.roles.cache.find(r => r.id == this.discord.app.config.discord.overrideRole)
+	isOverrideUser(member) {
+		return member.user.id == this.discord.app.config.discord.overrideRole || member.roles.cache.find(r => r.id == this.discord.app.config.discord.overrideRole)
 	}
 }
 
