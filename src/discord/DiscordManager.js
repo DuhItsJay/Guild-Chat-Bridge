@@ -76,6 +76,20 @@ class DiscordManager extends CommunicationBridge {
 		})
 	}
 
+	onBroadcastTitleEmbed({ message, title, color }) {
+		this.app.log.broadcast(message, 'Event')
+
+		this.app.discord.client.channels.fetch(this.app.config.discord.channel).then(channel => {
+			channel.send({
+				embed: {
+					color: color,
+					description: message,
+					title: title,
+				},
+			})
+		})
+	}
+
 	onBroadcastHeadedEmbed({ message, title, icon, color }) {
 		this.app.log.broadcast(message, 'Event')
 
