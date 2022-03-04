@@ -223,6 +223,12 @@ class StateHandler extends EventHandler {
 			return this.minecraft.broadcastCleanEmbed({ message: message.replace('Guild >', ''), color: 'DC143C' })
 		}
 
+		if (this.isGuildNotifications(message)) {
+			let color = message.includes('Enabled') ? '47F049' : 'F04947'
+
+			return this.minecraft.broadcastCleanEmbed({ message: message, color: color })
+		}
+
 		if (this.isTooFast(message)) {
 			return this.minecraft.app.log.warn(message)
 		}
@@ -285,17 +291,26 @@ class StateHandler extends EventHandler {
 				Object.entries(this.message_collection).forEach(str => {
 					if (str[1].includes(':')) {
 						let tempString = str[1].split(':')
-						tempString[0] = `**${tempString[0]}**`
-						tempString[1] = `\`${tempString
-							.slice(1)
-							.reduce((prev, curr) => prev + ':' + curr)
-							.trim()}\``
 
-						this.message_collection[str[0]] = tempString[0] + ':' + tempString[1]
+						if (tempString[1]) {
+							tempString[0] = `**${tempString[0]}**`
+							tempString[1] = `\`${tempString
+								.slice(1)
+								.reduce((prev, curr) => prev + ':' + curr)
+								.trim()}\``
+
+							this.message_collection[str[0]] = tempString[0] + ': ' + tempString[1]
+						} else {
+							tempString[0] = `\n\u200B__${tempString[0]}__`
+							this.message_collection[str[0]] = tempString[0] + ':'
+						}
 					}
 					if (str[1].includes('--')) {
 						let tempString = str[1].replace(/[^a-zA-Z ]/g, '').trim()
 						this.message_collection[str[0]] = `__${tempString}__`
+					}
+					if (str[1].includes('●')) {
+						this.message_collection[str[0]] = `\`\`\`prolog\n${str[1]}\`\`\``
 					}
 				})
 
@@ -327,10 +342,6 @@ class StateHandler extends EventHandler {
 	isOfficerMessage(message) {
 		//not implemented yet
 		return message.startsWith('Officer >') && message.includes(':')
-	}
-
-	isGuildInfoMessage(message) {
-		return message.includes('Guild Name:') && message.includes(':')
 	}
 
 	isSlowMessage(message) {
@@ -474,6 +485,10 @@ class StateHandler extends EventHandler {
 
 	isPartyInvite(message) {
 		return message.includes('has invited you to join their party!')
+	}
+
+	isGuildNotifications(message) {
+		return message.includes('guild join/leave notifications!')
 	}
 
 	isEmbedMessage(message) {
