@@ -12,6 +12,7 @@
 	"discord": {
 		"token": "discordBotToken",
 		"channel": "channelId",
+		"officerChannel": "channelId <delete this or leave it empty if you do not want an officer chat>",
 		"commandRole": "roleId (staff or similar)",
 		"overrideRole": "roleId(admin or similar)/ownerId",
 		"prefix": "!",
