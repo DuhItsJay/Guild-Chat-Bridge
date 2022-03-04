@@ -12,6 +12,8 @@ class DiscordManager extends CommunicationBridge {
 
 		this.stateHandler = new StateHandler(this)
 		this.messageHandler = new MessageHandler(this, new CommandHandler(this))
+
+		this.color = null
 	}
 
 	connect() {
@@ -24,7 +26,13 @@ class DiscordManager extends CommunicationBridge {
 			cachePresences: false,
 		})
 
-		this.client.on('ready', () => this.stateHandler.onReady())
+		this.client.on('ready', () => {
+			this.stateHandler.onReady()
+			this.client.channels.fetch(this.app.config.discord.channel).then(channel => {
+				this.color = channel.guild.members.cache.get(this.client.user.id).roles.highest.color
+			})
+		})
+
 		this.client.on('message', message => this.messageHandler.onMessage(message, this.client))
 
 		this.client.login(this.app.config.discord.token).catch(error => {
@@ -43,7 +51,7 @@ class DiscordManager extends CommunicationBridge {
 				this.app.discord.client.channels.fetch(this.app.config.discord.channel).then(channel => {
 					channel.send({
 						embed: {
-							color: '6495ED',
+							color: this.color,
 							author: {
 								name: `${username} [${guildRank}]: ${message}`,
 								icon_url: 'https://www.mc-heads.net/avatar/' + username,
