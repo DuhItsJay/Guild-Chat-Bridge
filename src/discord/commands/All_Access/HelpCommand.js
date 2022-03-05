@@ -1,5 +1,6 @@
-const DiscordCommand = require('../../../contracts/DiscordCommand')
+const fs = require('fs')
 
+const DiscordCommand = require('../../../contracts/DiscordCommand')
 const { version } = require('../../../../package.json')
 
 class HelpCommand extends DiscordCommand {
@@ -14,6 +15,7 @@ class HelpCommand extends DiscordCommand {
 	onCommand(message) {
 		let discordCommands = []
 		let minecraftCommands = []
+		let all_access_folder_length = fs.readdirSync('./src/discord/commands/All_Access').length
 
 		this.discord.messageHandler.command.commands.forEach(command => {
 			discordCommands.push(`\`${command.name}\`: ${command.description}`)
@@ -30,10 +32,10 @@ class HelpCommand extends DiscordCommand {
 					description: ['`< >` = Required arguments', '`[ ]` = Optional arguments'].join('\n'),
 					fields: [
 						{
-							name: 'Discord Commands',
-							value: discordCommands.slice(0, Math.ceil(discordCommands.length / 2)).join('\n'),
+							name: '**__Discord Commands__**\nAll Access',
+							value: discordCommands.slice(0, all_access_folder_length).join('\n'),
 						},
-						{ name: '\u200B', value: discordCommands.slice(Math.ceil(discordCommands.length / 2), discordCommands.length - 1).join('\n') },
+						{ name: 'Staff', value: discordCommands.slice(all_access_folder_length, discordCommands.length - 1).join('\n'), inline: true },
 						{
 							name: 'Minecraft Commands',
 							value: minecraftCommands.join('\n'),
