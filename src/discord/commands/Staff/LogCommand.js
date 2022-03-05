@@ -13,7 +13,7 @@ class LogCommand extends DiscordCommand {
 		let args = this.getArgs(message)
 		let page = args.shift()
 
-		this.sendMinecraftMessage(page ? `/g log ${[page]}` : '/g log')
+		this.sendMinecraftMessage(page ? `/g log ${page}` : '/g log')
 	}
 }
 
