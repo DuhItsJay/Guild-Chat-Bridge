@@ -28,7 +28,7 @@ class DiscordManager extends CommunicationBridge {
 
 		this.client.on('ready', () => {
 			this.stateHandler.onReady()
-			this.client.channels.fetch(this.app.config.discord.guildChannel).then(channel => {
+			this.client.channels.fetch(this.app.config.discord.channel.guild).then(channel => {
 				this.color = channel.guild.members.cache.get(this.client.user.id).roles.highest.color
 			})
 		})
@@ -44,7 +44,7 @@ class DiscordManager extends CommunicationBridge {
 		process.on('SIGINT', () => this.stateHandler.onClose())
 	}
 
-	onBroadcast({ username, message, guildRank }) {
+	onBroadcast({ username, message, guildRank, chatType }) {
 		const protocolRegex =
 			/\b(?<protocol>https?|ftp):\/\/(?<domain>[-A-Z0-9.]+)(?<file>\/[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
 		const domainRegex = /(?<=\s)\b(?<domain>[-A-Z0-9.]+)\/(?<file>[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
@@ -56,7 +56,7 @@ class DiscordManager extends CommunicationBridge {
 		this.app.log.broadcast(`${username} [${guildRank}]: ${message}`, `Discord`)
 		switch (this.app.config.discord.messageMode.toLowerCase()) {
 			case 'bot':
-				this.app.discord.client.channels.fetch(this.app.config.discord.guildChannel).then(channel => {
+				this.app.discord.client.channels.fetch(this.app.config.discord.channel[chatType]).then(channel => {
 					channel.send({
 						embed: {
 							color: this.color,
@@ -78,10 +78,10 @@ class DiscordManager extends CommunicationBridge {
 				})
 				break
 
-			case 'webhook':
+			/*case 'webhook':
 				message = message.replace(/@/g, '') // Stop pinging @everyone or @here
 				this.app.discord.webhook.send(message, { username: username, avatarURL: 'https://www.mc-heads.net/avatar/' + username })
-				break
+				break*/
 
 			default:
 				throw new Error('Invalid message mode: must be bot or webhook')
@@ -91,7 +91,7 @@ class DiscordManager extends CommunicationBridge {
 	onBroadcastCleanEmbed({ message, color }) {
 		this.app.log.broadcast(message, 'Event')
 
-		this.app.discord.client.channels.fetch(this.app.config.discord.guildChannel).then(channel => {
+		this.app.discord.client.channels.fetch(this.app.config.discord.channel[currChannel]).then(channel => {
 			channel.send({
 				embed: {
 					color: color,
@@ -104,7 +104,7 @@ class DiscordManager extends CommunicationBridge {
 	onBroadcastTitleEmbed({ message, title, color }) {
 		this.app.log.broadcast(message, 'Event')
 
-		this.app.discord.client.channels.fetch(this.app.config.discord.guildChannel).then(channel => {
+		this.app.discord.client.channels.fetch(this.app.config.discord.channel[currChannel]).then(channel => {
 			channel.send({
 				embed: {
 					color: color,
@@ -118,7 +118,7 @@ class DiscordManager extends CommunicationBridge {
 	onBroadcastHeadedEmbed({ message, title, icon, color }) {
 		this.app.log.broadcast(message, 'Event')
 
-		this.app.discord.client.channels.fetch(this.app.config.discord.guildChannel).then(channel => {
+		this.app.discord.client.channels.fetch(this.app.config.discord.channel[currChannel]).then(channel => {
 			channel.send({
 				embed: {
 					color: color,
@@ -137,7 +137,7 @@ class DiscordManager extends CommunicationBridge {
 
 		switch (this.app.config.discord.messageMode.toLowerCase()) {
 			case 'bot':
-				this.app.discord.client.channels.fetch(this.app.config.discord.guildChannel).then(channel => {
+				this.app.discord.client.channels.fetch(this.app.config.discord.channel[currChannel]).then(channel => {
 					channel.send({
 						embed: {
 							color: color,

@@ -19,6 +19,8 @@ class StateHandler extends EventHandler {
 	onMessage(event) {
 		const message = event.toString().trim()
 
+		console.log(message)
+
 		if (this.isLobbyJoinMessage(message)) {
 			this.minecraft.app.log.minecraft('Sending Minecraft client to limbo')
 			return this.bot.chat('/ac §')
@@ -276,7 +278,7 @@ class StateHandler extends EventHandler {
 			this.minecraft.broadcastTitleEmbed({ message: rawMessage.join('\n'), title: title, color: '6495ED' })
 		}
 
-		if (this.isGuildMessage(message)) {
+		if (this.isOfficerMessage(message)) {
 			let parts = message.split(':')
 			let group = parts.shift().trim()
 			let hasRank = group.endsWith(']')
@@ -289,9 +291,9 @@ class StateHandler extends EventHandler {
 				guildRank = 'Member'
 			}
 
-			if (this.isMessageFromBot(username)) {
+			/*if (this.isMessageFromBot(username)) {
 				return
-			}
+			}*/
 
 			const playerMessage = parts.join(':').trim()
 			if (playerMessage.length == 0 || this.command.handle(username, playerMessage)) {
@@ -306,6 +308,41 @@ class StateHandler extends EventHandler {
 				username: username,
 				message: playerMessage,
 				guildRank: guildRank,
+				chatType: 'officer',
+			})
+		}
+
+		if (this.isGuildMessage(message)) {
+			let parts = message.split(':')
+			let group = parts.shift().trim()
+			let hasRank = group.endsWith(']')
+
+			let userParts = group.split(' ')
+			let username = userParts[userParts.length - (hasRank ? 2 : 1)]
+			let guildRank = userParts[userParts.length - 1].replace(/[\[\]]/g, '')
+
+			if (guildRank == username) {
+				guildRank = 'Member'
+			}
+
+			/*if (this.isMessageFromBot(username)) {
+				return
+			}*/
+
+			const playerMessage = parts.join(':').trim()
+			if (playerMessage.length == 0 || this.command.handle(username, playerMessage)) {
+				return
+			}
+
+			if (playerMessage == '@') {
+				return
+			}
+
+			this.minecraft.broadcastMessage({
+				username: username,
+				message: playerMessage,
+				guildRank: guildRank,
+				chatType: 'guild',
 			})
 		}
 

@@ -14,7 +14,10 @@ class Configuration {
 		},
 		discord: {
 			token: null,
-			guildChannel: null,
+			channel: {
+				officer: null,
+				guild: null,
+			},
 			officerChannel: null,
 			commandRole: null,
 			overrideRole: null,
@@ -32,8 +35,8 @@ class Configuration {
 		MINECRAFT_LOBBY_HOLDER: val => (this.properties.minecraft.lobbyHolder = val),
 		MINECRAFT_ACCOUNT_TYPE: val => (this.properties.minecraft.accountType = val),
 		DISCORD_TOKEN: val => (this.properties.discord.token = val),
-		DISCORD_GUILD_CHANNEL: val => (this.properties.discord.guildChannel = val),
-		DISCORD_OFFICER_CHANNEL: val => (this.properties.discord.officerChannel = val),
+		DISCORD_GUILD_CHANNEL: val => (this.properties.discord.channel.guild = val),
+		DISCORD_OFFICER_CHANNEL: val => (this.properties.discord.channel.officer = val),
 		DISCORD_COMMAND_ROLE: val => (this.properties.discord.commandRole = val),
 		DISCORD_OWNER_ID: val => (this.properties.discord.overrideRole = val),
 		DISCORD_PREFIX: val => (this.properties.discord.prefix = val),
@@ -50,6 +53,8 @@ class Configuration {
 				this.environmentOverrides[environment](process.env[environment])
 			}
 		}
+
+		Object.values(this.properties.discord.channel).forEach(key => (key == key.match(/^[0-9]{18}$/gi) ? key : (key = null)))
 	}
 
 	get server() {

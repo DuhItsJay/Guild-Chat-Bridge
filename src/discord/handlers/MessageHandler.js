@@ -22,6 +22,7 @@ class MessageHandler {
 			username: message.member.displayName,
 			message: this.stripDiscordContent(message.content),
 			replyingTo: await this.fetchReply(message),
+			chatType: this.returnChatType(message.channel.id),
 		})
 	}
 
@@ -51,9 +52,16 @@ class MessageHandler {
 			.join('')
 	}
 
+	returnChatType(channel_id) {
+		return Object.entries(this.discord.app.config.discord.channel).find(entry => entry[1] == channel_id)[0]
+	}
+
 	shouldBroadcastMessage(message, client) {
 		return (
-			message.author.id != client.user.id && message.channel.id == this.discord.app.config.discord.guildChannel && message.content && message.content.length > 0
+			message.author.id != client.user.id &&
+			Object.values(this.discord.app.config.discord.channel).includes(message.channel.id) &&
+			message.content &&
+			message.content.length > 0
 		)
 	}
 }
