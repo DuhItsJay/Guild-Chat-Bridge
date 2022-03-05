@@ -41,8 +41,6 @@ class MessageHandler {
 		return message
 			.replace(/<[@|#|!|&]{1,2}(\d+){16,}>/g, '\n')
 			.replace(/<:\w+:(\d+){16,}>/g, '\n')
-			.replace(/\b(?<protocol>https?|ftp):\/\/(?<domain>[-A-Z0-9.]+)(?<file>\/[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi, '\n')
-			.replace(/\b(?<domain>[-A-Z0-9.]+)(?<file>\/[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi, '\n')
 			.replace(/[^\p{L}\p{N}\p{P}\p{Z}\p{Z}\p{Po}\p{Sm}]/gu, '\n')
 			.split('\n')
 			.map(part => {
