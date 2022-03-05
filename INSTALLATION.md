@@ -90,17 +90,19 @@ The minecraft section includes a `username` and `password` option, if using a Mo
 
 #### Discord
 
-The Discord options includes the `token`, `channel`, `commandRole`, `ownerId`, `prefix` and `messageMode` options.
+The Discord options includes the `token`, `guildChannel`, `officerChannel`, `commandRole`, `overrideId`, `prefix` and `messageMode` options.
 
 The token is the Discord application token, if you don't already have a Discord App, you can [create a new app](https://discordapp.com/developers), then convert the app to a Discord bot, and then get your Discord bot token on the "Bot" page.
 
-The Discord channel is the ID of the text channel the bot should be linked with, the bot will only send and listen to messages in the channel defined in the config.
+The `guildChannel` is the ID of the text channel the regular guild chat should be linked with, the bot will only send and listen to messages in the channel defined in the config.
+
+The `officerChannel` is the ID of the text channel the officer chat should be linked with. This can be left empty if you prefer not to use officer chat.
 
 The command role is the ID of any role on the server the bot is hosted for, any user with the role will be able to run all the Discord commands built into the bot, like `!kick` and `!relog`.
 
 > Note: Any user can run the `!help` command, however all the other commands requires the user has the command role.
 
-The owner ID is similar to the command role, however this is the ID of the user that should have full access to the `!override` command, the user with this permission can use the command to run virtually any command via the bot, and should therefore be limited to just the owner of the bot.
+The override ID or role is similar to the command role, however this is the ID of the user or role that should have full access to the `!override` command, the user or role with this permission can use the command to run virtually any command via the bot, and should therefore be limited to just the owner or administrators of the bot.
 
 The prefix is the command prefixed used for all the commands in the bot on the Discord side, by default this is set it `!`.
 
