@@ -192,6 +192,10 @@ class StateHandler extends EventHandler {
 			return this.minecraft.broadcastCleanEmbed({ message: `Guild Chat has been unmuted!`, color: '47F049' })
 		}
 
+		if (this.isGuildNotMuted(message)) {
+			return this.minecraft.broadcastCleanEmbed({ message: `The guild is not muted!`, color: 'F04947' })
+		}
+
 		if (this.isUserMuteMessage(message)) {
 			let user = message
 				.replace(/\[(.*?)\]/g, '')
@@ -220,10 +224,18 @@ class StateHandler extends EventHandler {
 		}
 
 		if (this.isSlowMessage(message)) {
-			return this.minecraft.broadcastCleanEmbed({ message: message.replace('Guild >', ''), color: 'DC143C' })
+			let color = message.includes('disabled') ? '47F049' : 'F04947'
+
+			return this.minecraft.broadcastCleanEmbed({ message: message.replace('Guild >', ''), color: color })
 		}
 
 		if (this.isGuildNotifications(message)) {
+			let color = message.includes('Enabled') ? '47F049' : 'F04947'
+
+			return this.minecraft.broadcastCleanEmbed({ message: message, color: color })
+		}
+
+		if (this.isOnlineModeMessage(message)) {
 			let color = message.includes('Enabled') ? '47F049' : 'F04947'
 
 			return this.minecraft.broadcastCleanEmbed({ message: message, color: color })
@@ -240,11 +252,28 @@ class StateHandler extends EventHandler {
 		}
 
 		if (this.isNoHistoryMessage(message)) {
-			return this.minecraft.broadcastCleanEmbed({ message: 'There is no recent history to display.', color: '6495ED' })
+			return this.minecraft.broadcastCleanEmbed({ message: `There is no recent history to display.`, color: '6495ED' })
 		}
 
 		if (this.isNoGEXPMessage(message)) {
 			return this.minecraft.broadcastCleanEmbed({ message: message, color: '6495ED' })
+		}
+
+		if (this.isGuildLogMessage(message)) {
+			let rawMessage = message.split('\n').splice(1, message.split('\n').length - 2)
+			const title = rawMessage.shift().replace(/[<>]/g, '').trim()
+
+			Object.entries(rawMessage).forEach(str => {
+				if (str[1]?.includes(':')) {
+					const unix = Date.parse(str[1].match(/\b(?<month>[A-Z]{3})\s(?<date>[0-9]{2})\s(?<year>[0-9]{4})\s(?<time>[:0-9]+)\s(?<zone>[A-Z]{3})/gi))
+					console.log(new Date(unix).toString(), unix)
+					const action = str[1].split(':').pop().trim()
+
+					rawMessage[str[0]] = `**<t:${unix / 1000}:f>:** ${action}`
+				}
+			})
+
+			this.minecraft.broadcastTitleEmbed({ message: rawMessage.join('\n'), title: title, color: '6495ED' })
 		}
 
 		if (this.isGuildMessage(message)) {
@@ -282,14 +311,16 @@ class StateHandler extends EventHandler {
 
 		if (this.isEmbedMessage(message)) {
 			this.collect = !this.collect
+			let string_Col = this.message_collection.toString()
+
 			if (this.message_collection.length == 0) {
 				return
 			}
 
-			if (!this.collect && this.message_collection.toString().includes('Guild')) {
+			if (!this.collect && string_Col.includes('Guild') && (string_Col.includes('Members') || string_Col.includes('Experience'))) {
 				const guildName = this.message_collection.shift().split(':').pop()
 				Object.entries(this.message_collection).forEach(str => {
-					if (str[1].includes(':')) {
+					if (str[1]?.includes(':')) {
 						let tempString = str[1].split(':')
 
 						if (tempString[1]) {
@@ -305,11 +336,11 @@ class StateHandler extends EventHandler {
 							this.message_collection[str[0]] = tempString[0] + ':'
 						}
 					}
-					if (str[1].includes('--')) {
+					if (str[1]?.includes('--')) {
 						let tempString = str[1].replace(/[^a-zA-Z ]/g, '').trim()
 						this.message_collection[str[0]] = `__${tempString}__`
 					}
-					if (str[1].includes('●')) {
+					if (str[1]?.includes('●')) {
 						this.message_collection[str[0]] = `\`\`\`prolog\n${str[1]}\`\`\``
 					}
 				})
@@ -317,9 +348,16 @@ class StateHandler extends EventHandler {
 				this.minecraft.broadcastTitleEmbed({ message: this.message_collection.join('\n'), title: guildName, color: '6495ED' })
 			}
 
+			if (!this.collect) {
+				const title = this.message_collection[0]
+				this.minecraft.broadcastTitleEmbed({ message: this.message_collection.join('\n'), title: title, color: '6495ED' })
+			}
+
 			this.message_collection = []
+
+			return
 		} else if (this.collect) {
-			this.message_collection.push(message)
+			return this.message_collection.push(message)
 		}
 	}
 
@@ -374,6 +412,10 @@ class StateHandler extends EventHandler {
 
 	isDemotionMessage(message) {
 		return message.includes('was demoted from') && !message.includes(':')
+	}
+
+	isOnlineModeMessage(message) {
+		return message.includes('guild online mode!') && !message.includes(':')
 	}
 
 	isBlockedMessage(message) {
@@ -455,6 +497,10 @@ class StateHandler extends EventHandler {
 		return message.includes('has unmuted the guild chat!') && !message.includes(':')
 	}
 
+	isGuildNotMuted(message) {
+		return message.includes('The guild is not muted!') && !message.includes(':')
+	}
+
 	isSetrankFail(message) {
 		return message.includes("I couldn't find a rank by the name of ") && !message.includes(':')
 	}
@@ -484,11 +530,16 @@ class StateHandler extends EventHandler {
 	}
 
 	isPartyInvite(message) {
-		return message.includes('has invited you to join their party!')
+		return message.includes('has invited you to join their party!') && !message.includes(':')
 	}
 
 	isGuildNotifications(message) {
-		return message.includes('guild join/leave notifications!')
+		return message.includes('guild join/leave notifications!') && !message.includes(':')
+	}
+
+	isGuildLogMessage(message) {
+		let tempString = message.split('\n')[1]
+		return tempString?.includes('Guild Log') && !tempString?.includes(':')
 	}
 
 	isEmbedMessage(message) {
