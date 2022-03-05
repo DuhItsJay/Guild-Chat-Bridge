@@ -13,7 +13,7 @@ class UnmuteCommand extends DiscordCommand {
 		let args = this.getArgs(message)
 		let user = args.shift()
 
-		this.sendMinecraftMessage(!user ? `/g unmute ${user}` : '/g unmute')
+		this.sendMinecraftMessage(`/g unmute ${user}`)
 	}
 }
 
