@@ -11,7 +11,7 @@ class StateHandler {
 			this.discord.webhook = await getWebhook(this.discord)
 		}
 
-		this.discord.client.channels.fetch(this.discord.app.config.discord.channel).then(channel => {
+		this.discord.client.channels.fetch(this.discord.app.config.discord.guildChannel).then(channel => {
 			channel.send({
 				embed: {
 					author: { name: `Chat Bridge is Online` },
@@ -23,7 +23,7 @@ class StateHandler {
 
 	onClose() {
 		this.discord.client.channels
-			.fetch(this.discord.app.config.discord.channel)
+			.fetch(this.discord.app.config.discord.guildChannel)
 			.then(channel => {
 				channel
 					.send({
@@ -43,7 +43,7 @@ class StateHandler {
 }
 
 async function getWebhook(discord) {
-	let channel = discord.client.channels.cache.get(discord.app.config.discord.channel)
+	let channel = discord.client.channels.cache.get(discord.app.config.discord.guildChannel)
 	let webhooks = await channel.fetchWebhooks()
 	if (webhooks.first()) {
 		return webhooks.first()

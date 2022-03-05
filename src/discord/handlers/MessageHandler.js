@@ -52,7 +52,9 @@ class MessageHandler {
 	}
 
 	shouldBroadcastMessage(message, client) {
-		return message.author.id != client.user.id && message.channel.id == this.discord.app.config.discord.channel && message.content && message.content.length > 0
+		return (
+			message.author.id != client.user.id && message.channel.id == this.discord.app.config.discord.guildChannel && message.content && message.content.length > 0
+		)
 	}
 }
 
