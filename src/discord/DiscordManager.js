@@ -45,6 +45,14 @@ class DiscordManager extends CommunicationBridge {
 	}
 
 	onBroadcast({ username, message, guildRank }) {
+		const protocolRegex =
+			/\b(?<protocol>https?|ftp):\/\/(?<domain>[-A-Z0-9.]+)(?<file>\/[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
+		const domainRegex = /(?<=\s)\b(?<domain>[-A-Z0-9.]+)\/(?<file>[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
+
+		const protocol_url = message.match(protocolRegex)
+		const domain_url = message.match(domainRegex)
+		message = message.replace(protocolRegex, ` [[link shared](${protocol_url})]`).replace(domainRegex, ` [[link shared](https://${domain_url})]`)
+
 		this.app.log.broadcast(`${username} [${guildRank}]: ${message}`, `Discord`)
 		switch (this.app.config.discord.messageMode.toLowerCase()) {
 			case 'bot':
@@ -53,10 +61,19 @@ class DiscordManager extends CommunicationBridge {
 						embed: {
 							color: this.color,
 							author: {
+								name: `${username} [${guildRank}]`,
+								icon_url: 'https://www.mc-heads.net/avatar/' + username,
+							},
+							description: message,
+						},
+						/*
+						embed: {
+							color: this.color,
+							author: {
 								name: `${username} [${guildRank}]: ${message}`,
 								icon_url: 'https://www.mc-heads.net/avatar/' + username,
 							},
-						},
+						},*/
 					})
 				})
 				break
