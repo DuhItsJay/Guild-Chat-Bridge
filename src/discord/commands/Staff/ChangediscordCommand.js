@@ -5,7 +5,7 @@ class ChangediscordCommand extends DiscordCommand {
 		super(discord)
 
 		this.name = 'discord'
-		this.aliases = []
+		this.aliases = ['disc']
 		this.description = `Set or view the guild's discord link`
 	}
 
