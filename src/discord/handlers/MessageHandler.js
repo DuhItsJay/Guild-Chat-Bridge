@@ -18,6 +18,8 @@ class MessageHandler {
 			return
 		}
 
+		this.discord.currChannel.push(Object.entries(this.discord.app.config.discord.channel).find(item => item[1] == message.channel.id)[0])
+
 		this.discord.broadcastMessage({
 			username: message.member.displayName,
 			message: this.stripDiscordContent(message.content),
