@@ -37,7 +37,7 @@ The application utilizes [Discord.js-light](https://github.com/timotejroiko/disc
 
 ## Support
 
-Looking for help? Open an [issue](https://github.com/DuhItsJay/Guild-Chat-Bridge/issues) or get a hold of me in our [support server](https://discord.gg/rjjj9BFV2D)!
+Looking for help? Open an [issue](https://github.com/DuhItsJay/Guild-Chat-Bridge/issues) or get a hold of me in our [support server](https://discord.gg/astrals)!
 
 ## Installation/Usage Guide
 
