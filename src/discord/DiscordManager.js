@@ -68,22 +68,14 @@ class DiscordManager extends CommunicationBridge {
 							},
 							description: message,
 						},
-						/*
-						embed: {
-							color: this.color,
-							author: {
-								name: `${username} [${guildRank}]: ${message}`,
-								icon_url: 'https://www.mc-heads.net/avatar/' + username,
-							},
-						},*/
 					})
 				})
 				break
 
-			/*case 'webhook':
+			case 'webhook':
 				message = message.replace(/@/g, '') // Stop pinging @everyone or @here
-				this.app.discord.webhook.send(message, { username: username, avatarURL: 'https://www.mc-heads.net/avatar/' + username })
-				break*/
+				this.app.discord.webhook[chatType].send(message, { username: username, avatarURL: 'https://www.mc-heads.net/avatar/' + username })
+				break
 
 			default:
 				throw new Error('Invalid message mode: must be bot or webhook')
@@ -135,11 +127,13 @@ class DiscordManager extends CommunicationBridge {
 	}
 
 	onPlayerToggle({ username, message, color }) {
+		this.currChannel.shift()
+
 		this.app.log.broadcast(username + ' ' + message, 'Event')
 
 		switch (this.app.config.discord.messageMode.toLowerCase()) {
 			case 'bot':
-				this.app.discord.client.channels.fetch(this.app.config.discord.channel[this.currChannel.shift()]).then(channel => {
+				this.app.discord.client.channels.fetch(this.app.config.discord.channel.guild).then(channel => {
 					channel.send({
 						embed: {
 							color: color,
@@ -152,8 +146,8 @@ class DiscordManager extends CommunicationBridge {
 				})
 				break
 
-			/*case 'webhook':
-				this.app.discord.webhook.send({
+			case 'webhook':
+				this.app.discord.webhook.guild.send({
 					username: username,
 					avatarURL: 'https://www.mc-heads.net/avatar/' + username,
 					embeds: [
@@ -163,7 +157,7 @@ class DiscordManager extends CommunicationBridge {
 						},
 					],
 				})
-				break*/
+				break
 
 			default:
 				throw new Error('Invalid message mode: must be bot or webhook')
