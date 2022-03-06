@@ -14,6 +14,7 @@ class DiscordManager extends CommunicationBridge {
 		this.messageHandler = new MessageHandler(this, new CommandHandler(this))
 
 		this.color = null
+		this.currChannel = []
 	}
 
 	connect() {
@@ -91,7 +92,7 @@ class DiscordManager extends CommunicationBridge {
 	onBroadcastCleanEmbed({ message, color }) {
 		this.app.log.broadcast(message, 'Event')
 
-		this.app.discord.client.channels.fetch(this.app.config.discord.channel[currChannel]).then(channel => {
+		this.app.discord.client.channels.fetch(this.app.config.discord.channel[this.currChannel.shift()]).then(channel => {
 			channel.send({
 				embed: {
 					color: color,
@@ -104,7 +105,7 @@ class DiscordManager extends CommunicationBridge {
 	onBroadcastTitleEmbed({ message, title, color }) {
 		this.app.log.broadcast(message, 'Event')
 
-		this.app.discord.client.channels.fetch(this.app.config.discord.channel[currChannel]).then(channel => {
+		this.app.discord.client.channels.fetch(this.app.config.discord.channel[this.currChannel.shift()]).then(channel => {
 			channel.send({
 				embed: {
 					color: color,
@@ -118,7 +119,7 @@ class DiscordManager extends CommunicationBridge {
 	onBroadcastHeadedEmbed({ message, title, icon, color }) {
 		this.app.log.broadcast(message, 'Event')
 
-		this.app.discord.client.channels.fetch(this.app.config.discord.channel[currChannel]).then(channel => {
+		this.app.discord.client.channels.fetch(this.app.config.discord.channel[this.currChannel.shift()]).then(channel => {
 			channel.send({
 				embed: {
 					color: color,
@@ -137,7 +138,7 @@ class DiscordManager extends CommunicationBridge {
 
 		switch (this.app.config.discord.messageMode.toLowerCase()) {
 			case 'bot':
-				this.app.discord.client.channels.fetch(this.app.config.discord.channel[currChannel]).then(channel => {
+				this.app.discord.client.channels.fetch(this.app.config.discord.channel[this.currChannel.shift()]).then(channel => {
 					channel.send({
 						embed: {
 							color: color,
@@ -150,7 +151,7 @@ class DiscordManager extends CommunicationBridge {
 				})
 				break
 
-			case 'webhook':
+			/*case 'webhook':
 				this.app.discord.webhook.send({
 					username: username,
 					avatarURL: 'https://www.mc-heads.net/avatar/' + username,
@@ -161,7 +162,7 @@ class DiscordManager extends CommunicationBridge {
 						},
 					],
 				})
-				break
+				break*/
 
 			default:
 				throw new Error('Invalid message mode: must be bot or webhook')

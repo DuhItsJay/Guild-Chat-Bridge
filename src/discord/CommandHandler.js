@@ -45,7 +45,10 @@ class CommandHandler {
 			})
 		}
 
-		this.discord.app.log.discord(`[${command.name}] ${message.content}`)
+		this.discord.app.log.discord(
+			`<${Object.entries(this.discord.app.config.discord.channel).find(item => item[1] == message.channel.id)[0]}> [${command.name}] ${message.content}`
+		)
+		this.discord.currChannel.push(Object.entries(this.discord.app.config.discord.channel).find(item => item[1] == message.channel.id)[0])
 		command.onCommand(message)
 
 		return true

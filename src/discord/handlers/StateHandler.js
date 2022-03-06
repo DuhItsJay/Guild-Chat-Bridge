@@ -7,9 +7,9 @@ class StateHandler {
 		this.discord.app.log.discord('Client ready, logged in as ' + this.discord.client.user.tag)
 		this.discord.client.user.setActivity('a!help', { key: 'PLAYING' })
 
-		if (this.discord.app.config.discord.messageMode == 'webhook') {
+		/*if (this.discord.app.config.discord.messageMode == 'webhook') {
 			this.discord.webhook = await getWebhook(this.discord)
-		}
+		}*/
 
 		Object.values(this.discord.app.config.discord.channel).forEach(key => {
 			if (key != null) {
@@ -49,7 +49,7 @@ class StateHandler {
 		})
 	}
 }
-
+/*
 async function getWebhook(discord) {
 	Object.values(this.discord.app.config.discord.channel).forEach(async key => {
 		if (key != null) {
@@ -65,6 +65,6 @@ async function getWebhook(discord) {
 			}
 		}
 	})
-}
+}*/
 
 module.exports = StateHandler
