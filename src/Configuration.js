@@ -54,7 +54,9 @@ class Configuration {
 			}
 		}
 
-		Object.values(this.properties.discord.channel).forEach(key => (key == key.match(/^[0-9]{18}$/gi) ? key : (key = null)))
+		Object.entries(this.properties.discord.channel).forEach(
+			entry => (this.discord.channel[entry[0]] = entry[1] == entry[1].match(/^[0-9]{18}$/gi) ? entry[1] : null)
+		)
 	}
 
 	get server() {

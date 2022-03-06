@@ -46,6 +46,7 @@ class DiscordManager extends CommunicationBridge {
 	}
 
 	onBroadcast({ username, message, guildRank, chatType }) {
+		if (this.app.config.discord.channel[chatType] == null) return
 		const protocolRegex =
 			/\b(?<protocol>https?|ftp):\/\/(?<domain>[-A-Z0-9.]+)(?<file>\/[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
 		const domainRegex = /(?<=\s)\b(?<domain>[-A-Z0-9.]+)\/(?<file>[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
