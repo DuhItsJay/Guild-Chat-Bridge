@@ -386,8 +386,9 @@ class StateHandler extends EventHandler {
 
 				this.minecraft.broadcastTitleEmbed({ message: this.msg_col.join('\n'), title: title, color: '6495ED' })
 			} else if (!this.collect) {
-				const title = this.msg_col.shift()
-				this.minecraft.broadcastTitleEmbed({ message: this.msg_col.join('\n'), title: title, color: '6495ED' })
+				this.msg_col.length <= 1
+					? this.minecraft.broadcastCleanEmbed({ message: this.msg_col.join('\n'), color: '6495ED' })
+					: this.minecraft.broadcastTitleEmbed({ message: this.msg_col.join('\n'), title: this.msg_col.shift(), color: '6495ED' })
 			}
 
 			this.msg_col = []
