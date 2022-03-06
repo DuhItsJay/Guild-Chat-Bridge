@@ -61,6 +61,7 @@ class MessageHandler {
 	shouldBroadcastMessage(message, client) {
 		return (
 			message.author.id != client.user.id &&
+			!message.author.bot &&
 			Object.values(this.discord.app.config.discord.channel).includes(message.channel.id) &&
 			message.content &&
 			message.content.length > 0
