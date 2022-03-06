@@ -383,9 +383,7 @@ class StateHandler extends EventHandler {
 				})
 
 				this.minecraft.broadcastTitleEmbed({ message: this.message_collection.join('\n'), title: guildName, color: '6495ED' })
-			}
-
-			if (!this.collect) {
+			} else if (!this.collect) {
 				const title = this.message_collection[0]
 				this.minecraft.broadcastTitleEmbed({ message: this.message_collection.join('\n'), title: title, color: '6495ED' })
 			}
