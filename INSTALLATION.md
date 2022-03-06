@@ -90,13 +90,13 @@ The minecraft section includes a `username` and `password` option, if using a Mo
 
 #### Discord
 
-The Discord options includes the `token`, `guildChannel`, `officerChannel`, `commandRole`, `overrideId`, `prefix` and `messageMode` options.
+The Discord options includes the `token`, `guild`, `officer`, `commandRole`, `overrideId`, `prefix` and `messageMode` options.
 
 The token is the Discord application token, if you don't already have a Discord App, you can [create a new app](https://discordapp.com/developers), then convert the app to a Discord bot, and then get your Discord bot token on the "Bot" page.
 
-The `guildChannel` is the ID of the text channel the regular guild chat should be linked with, the bot will only send and listen to messages in the channel defined in the config.
+The `guild` channel is the ID of the text channel the regular guild chat should be linked with, the bot will only send and listen to messages in the channel defined in the config.
 
-The `officerChannel` is the ID of the text channel the officer chat should be linked with. This can be left empty if you prefer not to use officer chat.
+The `officer` channel is the ID of the text channel the officer chat should be linked with. This can be left empty if you prefer not to use officer chat.
 
 The command role is the ID of any role on the server the bot is hosted for, any user with the role will be able to run all the Discord commands built into the bot, like `!kick` and `!relog`.
 
@@ -114,6 +114,8 @@ The messageMode can either be `bot` or `webhook`. This selects how the messages 
 > Note: The Discord rate limit for webhooks is 30 requests every 60 seconds, whereas for normal bot messages it's 5 messages every 5 seconds. Using webhooks effectively halves the number of messages the bot can send per minute which may cause issues in an active guild.
 
 #### Express
+
+> Note: not implemented yet
 
 The express section includes an option to enable/disable the express API option. If enabled, this will allow you to locally send requests to your bridge bot via other applications, and globally if you have port forwarding enabled.
 
