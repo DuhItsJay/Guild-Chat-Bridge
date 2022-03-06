@@ -24,7 +24,7 @@ class DiscordManager extends CommunicationBridge {
 			cacheOverwrites: false,
 			cacheRoles: true,
 			cacheEmojis: false,
-			cachePresences: false,
+			cachePurlences: false,
 		})
 
 		this.client.on('ready', () => {
@@ -45,20 +45,22 @@ class DiscordManager extends CommunicationBridge {
 		process.on('SIGINT', () => this.stateHandler.onClose())
 	}
 
-	onBroadcast({ username, message, guildRank, chatType }) {
+	async onBroadcast({ username, message, guildRank, chatType }) {
 		if (this.app.config.discord.channel[chatType] == null) return
 		const protocolRegex =
-			/\b(?<protocol>https?|ftp):\/\/(?<domain>[-A-Z0-9.]+)(?<file>\/[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
+			/(?<protocol>https?|ftp):\/\/(?<domain>[-A-Z0-9.]+)(?<file>\/[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
 		const domainRegex = /(?<=\s)\b(?<domain>[-A-Z0-9.]+)\/(?<file>[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
 
 		const protocol_url = message.match(protocolRegex)
 		const domain_url = message.match(domainRegex)
 		message = message.replace(protocolRegex, ` [[link shared](${protocol_url})]`).replace(domainRegex, ` [[link shared](https://${domain_url})]`)
 
+		const url = protocol_url?.shift() || `https://${domain_url?.shift()}` || ''
+
 		this.app.log.broadcast(`${username} [${guildRank}]: ${message}`, `Discord`)
 		switch (this.app.config.discord.messageMode.toLowerCase()) {
 			case 'bot':
-				this.app.discord.client.channels.fetch(this.app.config.discord.channel[chatType]).then(channel => {
+				this.app.discord.client.channels.fetch(this.app.config.discord.channel[chatType]).then(async channel => {
 					channel.send({
 						embed: {
 							color: this.color,
@@ -67,6 +69,9 @@ class DiscordManager extends CommunicationBridge {
 								icon_url: 'https://www.mc-heads.net/avatar/' + username,
 							},
 							description: message,
+							image: {
+								url: url.match(/\.(jpeg|jpg|gif|png)$/) != null ? url : '',
+							},
 						},
 					})
 				})
