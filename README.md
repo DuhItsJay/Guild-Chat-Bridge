@@ -94,13 +94,14 @@ Previous Versions: [CHANGELOG.md](./CHANGELOG.md)
 
 #### Guild
 
-- `!discord [discord link]` - View or Set the discord link for the guild
+- `!discord [discord link | reset]` - View or Set or reset the discord link for the guild
 - `HistoryCommand`
 - `LogCommand`
 - `NotificationCommand`
 - `OnlinemodeCommand`
 - `SlowmodeCommand`
 - `TagCommand`
+- `TagcolorCommand`
 
 ## Roadmap
 
