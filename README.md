@@ -129,8 +129,6 @@ Previous Versions: [CHANGELOG.md](./CHANGELOG.md)
   - The filter should block any messages sent from Discord to Hypixel that contains bannable words, and words that could potentially cause a mute.
 - [ ] Ingame commands
   - Add commands for players to use ingame to check other player stats (eg `!skills <ign>`, `!weight <ign>` etc)
-- [ ] Add support for officer chat
-  - Allocate a second discord channel to use for two way officer chat.
 
 ## License
 
