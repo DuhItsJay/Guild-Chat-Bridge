@@ -19,6 +19,8 @@ class StateHandler extends EventHandler {
 	onMessage(event) {
 		const message = event.toString().trim()
 
+		console.log(message)
+
 		if (this.isLobbyJoinMessage(message)) {
 			this.minecraft.app.log.minecraft('Sending Minecraft client to limbo')
 			return this.bot.chat('/ac §')
@@ -303,11 +305,14 @@ class StateHandler extends EventHandler {
 		}
 
 		if (this.isGuildMessage(message) || this.isOfficerMessage(message)) {
+			this.minecraft.app.discord.currChannel.shift()
+
 			let parts = message.split(':')
 			let group = parts.shift().trim()
 			let hasRank = group.endsWith(']')
 
 			let userParts = group.split(' ')
+			let chatType = userParts[0].toLowerCase()
 			let username = userParts[userParts.length - (hasRank ? 2 : 1)]
 			let guildRank = userParts[userParts.length - 1].replace(/[\[\]]/g, '')
 
@@ -316,7 +321,7 @@ class StateHandler extends EventHandler {
 			}
 
 			if (this.isMessageFromBot(username)) {
-				return this.minecraft.app.discord.currChannel.shift()
+				return
 			}
 
 			const playerMessage = parts.join(':').trim()
@@ -332,7 +337,7 @@ class StateHandler extends EventHandler {
 				username: username,
 				message: playerMessage,
 				guildRank: guildRank,
-				chatType: userParts,
+				chatType: chatType,
 			})
 		}
 
