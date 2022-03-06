@@ -7,7 +7,7 @@ class StateHandler extends EventHandler {
 		this.minecraft = minecraft
 		this.command = command
 		this.collect = false
-		this.message_collection = []
+		this.msg_col = []
 	}
 
 	registerEvents(bot) {
@@ -18,8 +18,6 @@ class StateHandler extends EventHandler {
 
 	onMessage(event) {
 		const message = event.toString().trim()
-
-		console.log(message)
 
 		if (this.isLobbyJoinMessage(message)) {
 			this.minecraft.app.log.minecraft('Sending Minecraft client to limbo')
@@ -112,6 +110,15 @@ class StateHandler extends EventHandler {
 				.trim()
 
 			return this.minecraft.broadcastCleanEmbed({ message: `${username} was demoted to ${newRank}`, color: 'F04947' })
+		}
+
+		if (this.isHighestRank(message)) {
+			let user = message
+				.replace(/\[(.*?)\]/g, '')
+				.trim()
+				.split(' ')[0]
+
+			return this.minecraft.broadcastCleanEmbed({ message: `${user} is already the highest guild rank!`, color: 'DC143C' })
 		}
 
 		if (this.isLowestRank(message)) {
@@ -268,7 +275,6 @@ class StateHandler extends EventHandler {
 			Object.entries(rawMessage).forEach(str => {
 				if (str[1]?.includes(':')) {
 					const unix = Date.parse(str[1].match(/\b(?<month>[A-Z]{3})\s(?<date>[0-9]{2})\s(?<year>[0-9]{4})\s(?<time>[:0-9]+)\s(?<zone>[A-Z]{3})/gi))
-					console.log(new Date(unix).toString(), unix)
 					const action = str[1].split(':').pop().trim()
 
 					rawMessage[str[0]] = `**<t:${unix / 1000}:f>:** ${action}`
@@ -278,41 +284,25 @@ class StateHandler extends EventHandler {
 			this.minecraft.broadcastTitleEmbed({ message: rawMessage.join('\n'), title: title, color: '6495ED' })
 		}
 
-		if (this.isOfficerMessage(message)) {
-			let parts = message.split(':')
-			let group = parts.shift().trim()
-			let hasRank = group.endsWith(']')
+		if (this.isDiscordMessage(message)) {
+			let rawMessage = message.split('\n').splice(1, message.split('\n').length - 2)
+			const title = rawMessage.splice(0, 2).join(' - ').match(/\D\S+/gi, '').join('')
+			console.log(title)
 
-			let userParts = group.split(' ')
-			let username = userParts[userParts.length - (hasRank ? 2 : 1)]
-			let guildRank = userParts[userParts.length - 1].replace(/[\[\]]/g, '')
-
-			if (guildRank == username) {
-				guildRank = 'Member'
-			}
-
-			/*if (this.isMessageFromBot(username)) {
-				return
-			}*/
-
-			const playerMessage = parts.join(':').trim()
-			if (playerMessage.length == 0 || this.command.handle(username, playerMessage)) {
-				return
-			}
-
-			if (playerMessage == '@') {
-				return
-			}
-
-			this.minecraft.broadcastMessage({
-				username: username,
-				message: playerMessage,
-				guildRank: guildRank,
-				chatType: 'officer',
+			Object.entries(rawMessage).forEach(str => {
+				if (str[1]?.includes('discord.gg')) {
+					if (!str[1].includes('https://')) {
+						rawMessage[str[0]] = `[[discord link](https://${str[1]})]`
+					} else {
+						rawMessage[str[0]] = ` [[discord link](${domain_url})]`
+					}
+				}
 			})
+
+			this.minecraft.broadcastTitleEmbed({ message: rawMessage.join('\n'), title: title, color: '6495ED' })
 		}
 
-		if (this.isGuildMessage(message)) {
+		if (this.isGuildMessage(message) || this.isOfficerMessage(message)) {
 			let parts = message.split(':')
 			let group = parts.shift().trim()
 			let hasRank = group.endsWith(']')
@@ -325,9 +315,9 @@ class StateHandler extends EventHandler {
 				guildRank = 'Member'
 			}
 
-			/*if (this.isMessageFromBot(username)) {
-				return
-			}*/
+			if (this.isMessageFromBot(username)) {
+				return this.minecraft.app.discord.currChannel.shift()
+			}
 
 			const playerMessage = parts.join(':').trim()
 			if (playerMessage.length == 0 || this.command.handle(username, playerMessage)) {
@@ -342,21 +332,21 @@ class StateHandler extends EventHandler {
 				username: username,
 				message: playerMessage,
 				guildRank: guildRank,
-				chatType: 'guild',
+				chatType: userParts,
 			})
 		}
 
 		if (this.isEmbedMessage(message)) {
 			this.collect = !this.collect
-			let string_Col = this.message_collection.toString()
+			let string_Col = this.msg_col.toString()
 
-			if (this.message_collection.length == 0) {
+			if (this.msg_col.length == 0) {
 				return
 			}
 
 			if (!this.collect && string_Col.includes('Guild') && (string_Col.includes('Members') || string_Col.includes('Experience'))) {
-				const guildName = this.message_collection.shift().split(':').pop()
-				Object.entries(this.message_collection).forEach(str => {
+				const guildName = this.msg_col.shift().split(':').pop()
+				Object.entries(this.msg_col).forEach(str => {
 					if (str[1]?.includes(':')) {
 						let tempString = str[1].split(':')
 
@@ -367,32 +357,44 @@ class StateHandler extends EventHandler {
 								.reduce((prev, curr) => prev + ':' + curr)
 								.trim()}\``
 
-							this.message_collection[str[0]] = tempString[0] + ': ' + tempString[1]
+							this.msg_col[str[0]] = tempString[0] + ': ' + tempString[1]
 						} else {
 							tempString[0] = `\n\u200B__${tempString[0]}__`
-							this.message_collection[str[0]] = tempString[0] + ':'
+							this.msg_col[str[0]] = tempString[0] + ':'
 						}
 					}
 					if (str[1]?.includes('--')) {
 						let tempString = str[1].replace(/[^a-zA-Z ]/g, '').trim()
-						this.message_collection[str[0]] = `__${tempString}__`
+						this.msg_col[str[0]] = `__${tempString}__`
 					}
 					if (str[1]?.includes('●')) {
-						this.message_collection[str[0]] = `\`\`\`prolog\n${str[1]}\`\`\``
+						this.msg_col[str[0]] = `\`\`\`prolog\n${str[1]}\`\`\``
 					}
 				})
 
-				this.minecraft.broadcastTitleEmbed({ message: this.message_collection.join('\n'), title: guildName, color: '6495ED' })
+				this.minecraft.broadcastTitleEmbed({ message: this.msg_col.join('\n'), title: guildName, color: '6495ED' })
+			} else if (!this.collect && string_Col.includes('Guild History')) {
+				const title = this.msg_col.shift()
+				Object.entries(this.msg_col).forEach(str => {
+					if (str[1]?.includes(':')) {
+						const unix = Date.parse(str[1].match(/\b(?<month>[A-Z]{3})\s(?<date>[0-9]{2})\s(?<year>[0-9]{4})\s(?<time>[:0-9]+)\s(?<zone>[A-Z]{3})/gi))
+						const action = str[1].split(':').pop().trim()
+
+						this.msg_col[str[0]] = `**<t:${unix / 1000}:f>:** ${action}`
+					}
+				})
+
+				this.minecraft.broadcastTitleEmbed({ message: this.msg_col.join('\n'), title: title, color: '6495ED' })
 			} else if (!this.collect) {
-				const title = this.message_collection[0]
-				this.minecraft.broadcastTitleEmbed({ message: this.message_collection.join('\n'), title: title, color: '6495ED' })
+				const title = this.msg_col.shift()
+				this.minecraft.broadcastTitleEmbed({ message: this.msg_col.join('\n'), title: title, color: '6495ED' })
 			}
 
-			this.message_collection = []
+			this.msg_col = []
 
 			return
 		} else if (this.collect) {
-			return this.message_collection.push(message)
+			return this.msg_col.push(message)
 		}
 	}
 
@@ -413,7 +415,6 @@ class StateHandler extends EventHandler {
 	}
 
 	isOfficerMessage(message) {
-		//not implemented yet
 		return message.startsWith('Officer >') && message.includes(':')
 	}
 
@@ -548,6 +549,10 @@ class StateHandler extends EventHandler {
 		return message.includes(' is not in your guild!') && !message.includes(':')
 	}
 
+	isHighestRank(message) {
+		return message.includes("is already the highest rank you've created!") && !message.includes(':')
+	}
+
 	isLowestRank(message) {
 		return message.includes("is already the lowest rank you've created!") && !message.includes(':')
 	}
@@ -575,6 +580,11 @@ class StateHandler extends EventHandler {
 	isGuildLogMessage(message) {
 		let tempString = message.split('\n')[1]
 		return tempString?.includes('Guild Log') && !tempString?.includes(':')
+	}
+
+	isDiscordMessage(message) {
+		let tempString = message.split('\n')[2]
+		return tempString?.includes('DISCORD') && !tempString?.includes(':')
 	}
 
 	isEmbedMessage(message) {
