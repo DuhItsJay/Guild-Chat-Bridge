@@ -7,9 +7,9 @@ class StateHandler {
 		this.discord.app.log.discord('Client ready, logged in as ' + this.discord.client.user.tag)
 		this.discord.client.user.setActivity('a!help', { key: 'PLAYING' })
 
-		/*if (this.discord.app.config.discord.messageMode == 'webhook') {
-			this.discord.webhook = await getWebhook(this.discord)
-		}*/
+		if (this.discord.app.config.discord.messageMode == 'webhook') {
+			await getWebhook(this.discord, (this.discord.webhook = {}))
+		}
 
 		Object.values(this.discord.app.config.discord.channel).forEach(key => {
 			if (key != null) {
@@ -49,22 +49,23 @@ class StateHandler {
 		})
 	}
 }
-/*
-async function getWebhook(discord) {
-	Object.values(this.discord.app.config.discord.channel).forEach(async key => {
-		if (key != null) {
-			let channel = discord.client.channels.cache.get(key)
+
+async function getWebhook(discord, jsonObj) {
+	Object.entries(discord.app.config.discord.channel).forEach(async entry => {
+		if (entry[1] != null) {
+			let channel = discord.client.channels.cache.get(entry[1])
 			let webhooks = await channel.fetchWebhooks()
 			if (webhooks.first()) {
-				return webhooks.first()
+				jsonObj[entry[0]] = webhooks.first()
 			} else {
 				var res = await channel.createWebhook(discord.client.user.username, {
 					avatar: discord.client.user.avatarURL(),
 				})
-				return res
+				jsonObj[entry[0]] = res
 			}
 		}
 	})
-}*/
+	return
+}
 
 module.exports = StateHandler
