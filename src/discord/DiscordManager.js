@@ -14,7 +14,7 @@ class DiscordManager extends CommunicationBridge {
 		this.messageHandler = new MessageHandler(this, new CommandHandler(this))
 
 		this.color = null
-		this.currChannel = []
+		this.currChannel = new Array()
 	}
 
 	connect() {
