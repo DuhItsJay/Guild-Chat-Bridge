@@ -13,7 +13,7 @@ class TagCommand extends DiscordCommand {
 		let args = this.getArgs(message)
 		let tag = args.shift()
 
-		this.sendMinecraftMessage(`/g tag ${tag ? tag : ''}`)
+		this.sendMinecraftMessage(`/g tag ${tag}`)
 	}
 }
 
