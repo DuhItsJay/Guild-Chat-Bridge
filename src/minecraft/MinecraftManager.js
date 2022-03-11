@@ -36,6 +36,13 @@ class MinecraftManager extends CommunicationBridge {
 		})
 	}
 
+	fetchAPIKey() {
+		if (this.app.config.api.autoReplace) {
+			this.app.log.broadcast(`Replacing API Key`, 'Minecraft')
+			this.bot.chat(`/api new`)
+		}
+	}
+
 	onBroadcast({ username, message, replyingTo, chatType }) {
 		this.app.log.broadcast(`<${chatType}> ${username}: ${message}`, 'Minecraft')
 
