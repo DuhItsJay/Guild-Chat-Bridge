@@ -103,6 +103,15 @@ Previous Versions: [CHANGELOG.md](./CHANGELOG.md)
 - `TagCommand`
 - `TagcolorCommand`
 
+### Minecraft (Ingame)
+
+- `Ping`
+- `GuildLobby`
+- `Weight`
+- `Skill`
+- `Slayer`
+- `Dungeon`
+
 ## Roadmap
 
 - [ ] Guild Commands:
@@ -128,8 +137,6 @@ Previous Versions: [CHANGELOG.md](./CHANGELOG.md)
 
 - [ ] Chat message filter
   - The filter should block any messages sent from Discord to Hypixel that contains bannable words, and words that could potentially cause a mute.
-- [ ] Ingame commands
-  - Add commands for players to use ingame to check other player stats (eg `!skills <ign>`, `!weight <ign>` etc)
 
 ## License
 
