@@ -26,14 +26,9 @@ class StateHandler extends EventHandler {
 			return this.bot.chat('/ac §')
 		}
 
-		console.log(this.isAPIMessage(message))
-
-		if (this.isAPIMessage(message)) {
+		if (this.isAPIMessage(message) && this.minecraft.app.config.api.autoReplace) {
 			this.minecraft.app.log.minecraft('New API key recieved')
-			this.minecraft.app.config.api.key = message.match(/(?<Key>[A-Z0-9-]{36})/gi)
-
-			console.log(this.minecraft.app.config.api.key)
-			return
+			return (this.minecraft.app.config.api.key = message.match(/(?<Key>[A-Z0-9-]{36})/i))
 		}
 
 		if (this.isFailedChatMessage(message)) {
@@ -608,7 +603,7 @@ class StateHandler extends EventHandler {
 	}
 
 	isAPIMessage(message) {
-		return message == `Your new API key is ${/(?<Key>[A-Z0-9\-]{36})/gi}` && !message.includes(':')
+		return message.includes('Your new API key is') && !message.includes(':')
 	}
 }
 
