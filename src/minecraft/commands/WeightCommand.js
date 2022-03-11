@@ -1,4 +1,7 @@
 const MinecraftCommand = require('../../contracts/MinecraftCommand')
+const DungeonsGenerator = require('./calculators/DungeonsGenerator')
+const SkillsGenerator = require('./calculators/SkillsGenerator')
+const SlayersGenerator = require('./calculators/SlayersGenerator')
 
 class WeightCommand extends MinecraftCommand {
 	constructor(minecraft) {
