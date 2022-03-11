@@ -47,15 +47,14 @@ class DiscordManager extends CommunicationBridge {
 
 	async onBroadcast({ username, message, guildRank, chatType }) {
 		if (this.app.config.discord.channel[chatType] == null) return
-		const protocolRegex =
-			/(?<protocol>https?|ftp):\/\/(?<domain>[-A-Z0-9.]+)(?<file>\/[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
-		const domainRegex = /(?<=\s)\b(?<domain>[-A-Z0-9.]+)\/(?<file>[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/gi
+		const protocolRegex = /(?<protocol>https?|ftp):\/\/(?<domain>[-A-Z0-9.]+)(?<file>\/[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/i
+		const domainRegex = /(?<=\s)\b(?<domain>[-A-Z0-9.]+)\/(?<file>[-A-Z0-9+&@#\/%=~_|!:,.;]*)?(?<parameters>\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/i
 
 		const protocol_url = message.match(protocolRegex)
 		const domain_url = message.match(domainRegex)
 		message = message.replace(protocolRegex, ` [[link shared](${protocol_url})]`).replace(domainRegex, ` [[link shared](https://${domain_url})]`)
 
-		const url = protocol_url?.shift() || `https://${domain_url?.shift()}` || ''
+		const url = protocol_url || `https://${domain_url}` || ''
 
 		this.app.log.broadcast(`${username} [${guildRank}]: ${message}`, `Discord`)
 		switch (this.app.config.discord.messageMode.toLowerCase()) {
