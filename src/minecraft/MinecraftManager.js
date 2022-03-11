@@ -3,6 +3,7 @@ const CommandHandler = require('./CommandHandler')
 const StateHandler = require('./handlers/StateHandler')
 const ErrorHandler = require('./handlers/ErrorHandler')
 const ChatHandler = require('./handlers/ChatHandler')
+const KeyHandler = require('./handlers/KeyHandler')
 const mineflayer = require('mineflayer')
 
 class MinecraftManager extends CommunicationBridge {
@@ -13,6 +14,7 @@ class MinecraftManager extends CommunicationBridge {
 
 		this.stateHandler = new StateHandler(this)
 		this.errorHandler = new ErrorHandler(this)
+		this.keyHandler = new KeyHandler(this)
 		this.chatHandler = new ChatHandler(this, new CommandHandler(this))
 	}
 
@@ -22,6 +24,7 @@ class MinecraftManager extends CommunicationBridge {
 		this.errorHandler.registerEvents(this.bot)
 		this.stateHandler.registerEvents(this.bot)
 		this.chatHandler.registerEvents(this.bot)
+		this.keyHandler.registerEvents()
 	}
 
 	createBotConnection() {
@@ -34,13 +37,6 @@ class MinecraftManager extends CommunicationBridge {
 			auth: this.app.config.minecraft.accountType,
 			hideErrors: true,
 		})
-	}
-
-	fetchAPIKey() {
-		if (this.app.config.api.autoReplace) {
-			this.app.log.broadcast(`Replacing API Key`, 'Minecraft')
-			this.bot.chat(`/api new`)
-		}
 	}
 
 	onBroadcast({ username, message, replyingTo, chatType }) {
