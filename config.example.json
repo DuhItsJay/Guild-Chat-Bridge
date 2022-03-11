@@ -19,5 +19,9 @@
 		"overrideRole": "roleId(admin or similar)/ownerId",
 		"prefix": "!",
 		"messageMode": "bot"
+	},
+	"api": {
+		"key": "apiKey",
+		"autoReplace": false
 	}
 }

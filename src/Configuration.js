@@ -24,6 +24,10 @@ class Configuration {
 			prefix: '!',
 			messageMode: 'bot',
 		},
+		api: {
+			key: null,
+			autoReplace: true,
+		},
 	}
 
 	//Overwriting values from config.json onto defined properties
@@ -41,6 +45,8 @@ class Configuration {
 		DISCORD_OWNER_ID: val => (this.properties.discord.overrideRole = val),
 		DISCORD_PREFIX: val => (this.properties.discord.prefix = val),
 		MESSAGE_MODE: val => (this.properties.discord.messageMode = val),
+		API_KEY: val => (this.properties.api.key = val),
+		AUTO_REPLACE_KEY: val => (this.properties.api.autoReplace = val),
 	}
 
 	constructor() {
@@ -69,6 +75,10 @@ class Configuration {
 
 	get discord() {
 		return this.properties.discord
+	}
+
+	get api() {
+		return this.properties.api
 	}
 }
 
