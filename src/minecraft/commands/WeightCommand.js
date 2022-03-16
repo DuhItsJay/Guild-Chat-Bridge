@@ -12,7 +12,7 @@ class WeightCommand extends MinecraftCommand {
 		this.description = 'returns the user weight information on their latest or specified profile'
 	}
 
-	onCommand(username, message) {
+	async onCommand(username, message) {
 		let args = this.getArgs(message)
 		let profile = args.shift()
 		let uuid = await this.getUUID(username)
