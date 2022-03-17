@@ -14,9 +14,15 @@ class WeightCommand extends MinecraftCommand {
 
 	async onCommand(username, message) {
 		let args = this.getArgs(message)
+		let ign = username
+		if (!this.minecraft.profiles.includes(args[0]) && args[0]) {
+			ign = args.shift()
+		}
 		let profile = args.shift()
-		let uuid = await this.getUUID(username)
+		let uuid = await this.getUUID(ign)
 		let curr_profile
+
+		if (uuid == 'terminate') return this.minecraft.bot.chat(`/w ${username} ${ign} is an invalid ign`)
 
 		this.fetchRequest(uuid).then(async data => {
 			if (profile == undefined) {
@@ -29,7 +35,7 @@ class WeightCommand extends MinecraftCommand {
 						: data.profiles[data.profiles.findIndex(a => a.cute_name == profile)].members[uuid]
 			}
 
-			return this.minecraft.bot.chat(`/gc ${username}'s weight: ${this.onParseData(curr_profile)}`)
+			return this.minecraft.bot.chat(`/w ${username} ${ign}'s weight: ${this.onParseData(curr_profile)}`)
 		})
 	}
 
@@ -42,7 +48,7 @@ class WeightCommand extends MinecraftCommand {
 		var slayer = (Number(slayer_data['weight']) + Number(slayer_data['weight_overflow'])).toFixed(2)
 		var dungeon = (Number(dungeon_data['weight']) + Number(dungeon_data['weight_overflow'])).toFixed(2)
 
-		return (total_weight = parseInt(skill) + parseInt(slayer) + parseInt(dungeon))
+		return parseInt(skill) + parseInt(slayer) + parseInt(dungeon)
 	}
 }
 
