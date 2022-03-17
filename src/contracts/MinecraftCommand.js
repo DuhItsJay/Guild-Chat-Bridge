@@ -27,7 +27,7 @@ class MinecraftCommand {
 		throw new Error('Command onCommand method is not implemented yet!')
 	}
 
-	sortByLatest(data) {
+	sortByLatest(data, uuid) {
 		return data.sort((a, b) => b.members[uuid].last_save - a.members[uuid].last_save)[0]
 	}
 
