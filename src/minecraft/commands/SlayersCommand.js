@@ -1,5 +1,6 @@
 const MinecraftCommand = require('../../contracts/MinecraftCommand')
 const SlayersGenerator = require('./calculators/SlayersGenerator')
+const { abbreviateNumber } = require('../utils/datacrunch')
 
 class SlayersCommand extends MinecraftCommand {
 	constructor(minecraft) {
@@ -12,9 +13,15 @@ class SlayersCommand extends MinecraftCommand {
 
 	async onCommand(username, message) {
 		let args = this.getArgs(message)
+		let ign = username
+		if (!this.minecraft.profiles.includes(args[0]) && args[0]) {
+			ign = args.shift()
+		}
 		let profile = args.shift()
-		let uuid = await this.getUUID(username)
+		let uuid = await this.getUUID(ign)
 		let curr_profile
+
+		if (uuid == 'terminate') return this.minecraft.bot.chat(`/w ${username} ${ign} is an invalid ign`)
 
 		this.fetchRequest(uuid).then(async data => {
 			if (profile == undefined) {
@@ -27,14 +34,14 @@ class SlayersCommand extends MinecraftCommand {
 						: data.profiles[data.profiles.findIndex(a => a.cute_name == profile)].members[uuid]
 			}
 
-			return this.minecraft.bot.chat(`/gc ${username}'s slayer weight: ${this.onParseData(curr_profile)}`)
+			return this.minecraft.bot.chat(`/w ${username} ${ign}'s total slayer experience: ${this.onParseData(curr_profile)}`)
 		})
 	}
 
 	onParseData(curr_profile) {
 		const slayer_data = SlayersGenerator.execute(curr_profile)
 
-		return (Number(slayer_data['weight']) + Number(slayer_data['weight_overflow'])).toFixed(2)
+		return abbreviateNumber(Number(slayer_data.total_experience).toFixed(2))
 	}
 }
 
