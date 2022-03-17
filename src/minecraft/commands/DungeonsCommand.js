@@ -1,4 +1,5 @@
 const MinecraftCommand = require('../../contracts/MinecraftCommand')
+const DungeonsGenerator = require('./calculators/DungeonsGenerator')
 
 class DungeonsCommand extends MinecraftCommand {
 	constructor(minecraft) {
@@ -11,9 +12,14 @@ class DungeonsCommand extends MinecraftCommand {
 
 	async onCommand(username, message) {
 		let args = this.getArgs(message)
+		if (!this.minecraft.profiles.includes(args[0]) && args[0]) {
+			username = args.shift()
+		}
 		let profile = args.shift()
 		let uuid = await this.getUUID(username)
 		let curr_profile
+
+		if (uuid == 'terminate') return this.minecraft.bot.chat(`/w ${username} ${ign} is an invalid ign`)
 
 		this.fetchRequest(uuid).then(async data => {
 			if (profile == undefined) {
@@ -26,14 +32,14 @@ class DungeonsCommand extends MinecraftCommand {
 						: data.profiles[data.profiles.findIndex(a => a.cute_name == profile)].members[uuid]
 			}
 
-			return this.minecraft.bot.chat(`/gc ${username}'s dungeon weight: ${this.onParseData(curr_profile)}`)
+			return this.minecraft.bot.chat(`/w ${username} ${ign}'s catacombs level: ${this.onParseData(curr_profile)}`)
 		})
 	}
 
 	onParseData(curr_profile) {
 		const dungeon_data = DungeonsGenerator.execute(curr_profile)
 
-		return (Number(dungeon_data['weight'] || 0) + Number(dungeon_data['weight_overflow'] || 0)).toFixed(2)
+		return Number(dungeon_data.types.catacombs.level).toFixed(2)
 	}
 }
 
