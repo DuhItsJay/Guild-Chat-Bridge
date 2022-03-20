@@ -69,11 +69,11 @@ Previous Versions: [CHANGELOG.md](./CHANGELOG.md)
 
 #### Guild
 
-- `InfoCommand`
-- `MemberListCommand`
-- `OnlineCommand`
-- `QuestCommand`
-- `TopCommand`
+- `!info` - Shows the guilds info
+- `!list` - Shows a list of all the members in the guild
+- `!online` - Shows a list of current online members
+- `!quest` - Shows information regarding the current Guild Quest
+- `!top` - Shows a list of players with the highest gexp recieved today
 
 ### Staff Only
 
@@ -95,31 +95,26 @@ Previous Versions: [CHANGELOG.md](./CHANGELOG.md)
 #### Guild
 
 - `!discord [discord link | reset]` - View or Set or reset the discord link for the guild
-- `HistoryCommand`
-- `LogCommand`
-- `NotificationCommand`
-- `OnlinemodeCommand`
-- `SlowmodeCommand`
-- `TagCommand`
-- `TagcolorCommand`
+- `!history` - View the last 24 hours of guild events
+- `!log` - View the audit log
+- `!notifications` - Changes Join/Leave log settings for the guild
+- `!onlinemode` - Toggle if offline players are displayed in the guild list
+- `!slowmode` - Toggle slow chat, requiring guild members to wait 10 seconds between messages
+- `!tag` - Changes guild tag
+- `!tagcolor` - Changes guild tag color
 
 ### Minecraft (Ingame)
 
-- `Ping`
-- `GuildLobby`
-- `Weight`
-- `Skill`
-- `Slayer`
-- `Dungeon`
+- `!ping` - Replies with `Pong!` to the user
+- `!guildlobby` - Whispers user's username to a guild lobby account
+- `!weight [user | profile] [profile (if user is a parameter)]` - returns the user weight information on their latest or specified profile
+- `!skills [user | profile] [profile (if user is a parameter)]` - returns the user skill information on their latest or specified profile
+- `!slayers [user | profile] [profile (if user is a parameter)]` - returns the user slayer information on their latest or specified profile
+- `!dungeons [user | profile] [profile (if user is a parameter)]` - returns the user dungeon information on their latest or specified profile
 
 ## Roadmap
 
 - [ ] Guild Commands:
-
-  - /guild menu - Opens the Guild Menu
-
-    - GUI Clicking
-    - Still in consideration (possibly bannable)
 
   - /guild motd - Modifies the MOTD for the Guild
 
