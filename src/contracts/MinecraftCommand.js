@@ -38,11 +38,7 @@ class MinecraftCommand {
 	}
 
 	async fetchRequest(uuid) {
-		const url = new URL(PROFILE_ROUTE)
-		url.searchParams.append('key', this.minecraft.app.config.api.key)
-		url.searchParams.append('uuid', uuid)
-
-		let { data } = await axios(url.toString())
+		const { data } = await axios.get(`https://api.hypixel.net/skyblock/profiles?key=${this.minecraft.app.config.api.key}&uuid=${uuid}`)
 
 		return data
 	}
