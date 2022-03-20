@@ -26,9 +26,9 @@
 
 To get started, clone down the repository using:
 
-    git clone https://github.com/Senither/hypixel-discord-chat-bridge.git
+    git clone https://github.com/DuhItsJay/Guild-Chat-Bridge
 
-Next go into the `hypixel-discord-chat-bridge` folder and install all the dependencies using Yarn.
+Next go into the `Guild-Chat-Bridge` folder and install all the dependencies using Yarn.
 
     yarn
 
@@ -54,9 +54,9 @@ _Older versions may also work, but have not been tested._
 
 To get started, clone down the repository using:
 
-    git clone https://github.com/Senither/hypixel-discord-chat-bridge.git
+    git clone https://github.com/DuhItsJay/Guild-Chat-Bridge
 
-Next go into the `hypixel-discord-chat-bridge` folder and open the `docker-compose.yml` file, within the file you'll find all the environment variables that can be used to setup the bot, you should fill replace the default values with your real Discord and Minecraft login info, once you're done you can start the bot using Docker.
+Next go into the `Guild-Chat-Bridge` folder and open the `docker-compose.yml` file, within the file you'll find all the environment variables that can be used to setup the bot, you should fill replace the default values with your real Discord and Minecraft login info, once you're done you can start the bot using Docker.
 
     docker-compose up -d
 
@@ -70,7 +70,7 @@ You'll need a GitHub account to deploy directly to Replit, as well as a [Replit]
 
 ### Setup Guide
 
-1. First [fork this project](https://github.com/Senither/hypixel-discord-chat-bridge/fork) onto your own GitHub account, once you have a copy of the project on your own account, sign in to Replit and import the project into Replit.
+1. First [fork this project](https://github.com/DuhItsJay/Guild-Chat-Bridge/fork) onto your own GitHub account, once you have a copy of the project on your own account, sign in to Replit and import the project into Replit.
 2. Now that the project is imported you should be able to click on the project in the Replit dashboard to create a new project from it, when the project has been created you should be able to select some settings about the project, make sure the selected language is set to `Node.js`, you can leave the _"configure the run button"_ settings as the default.
 3. Next, copy or rename the `config.example.json` file to `config.json`, you can find the files on the left-hand side of the Replit dashboard, when the file has been copied or renamed you should open the file and setup the settings, such as the Minecraft account details, and the Discord information
 4. Lastly you'll need to install all the dependencies for the project, this can be done by selecting the _"Shell"_ tab which should open the shell command prompt, then in that write `yarn install` to install all the dependencies.
@@ -112,6 +112,12 @@ The messageMode can either be `bot` or `webhook`. This selects how the messages 
 - [View Bot Mode example](https://i.imgur.com/L8XhcNn.png)
 
 > Note: The Discord rate limit for webhooks is 30 requests every 60 seconds, whereas for normal bot messages it's 5 messages every 5 seconds. Using webhooks effectively halves the number of messages the bot can send per minute which may cause issues in an active guild.
+
+#### API
+
+The API option includes the `key` and `autoReplace` options. The `key` option is the hypixel api key that you can get from using `/api new` in chat on hypixel. You can copy that into the `key` option or have `autoReplace` set to true. The `autoReplace` option, when set to true, will automatically fetch an api key to use, if `key` isn't a valid api key or the current api key expires.
+
+> Note: the `autoReplace` option is recommended until a failsafe is implemented for ingame commands
 
 #### Express
 
