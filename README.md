@@ -47,7 +47,7 @@ See [INSTALLATION.md](./INSTALLATION.md) for instructions on how to install and 
 
 ### Ingame Commands!
 
-Use these commands by calling the bot in guild chat. The bot will then whisper to you the stats you requested. Example - Upon using !weight, the bot will whisper to you (Minecraft IGN)'s weight: (Skyblock Weight)
+Use these commands by calling the bot in guild chat. The bot will then whisper to you the stats you requested. Example - Upon using !weight, the bot will whisper to you `(Minecraft IGN)'s weight: (Skyblock Weight)`
 
 - `!weight [user | profile] [profile (if user is a parameter)]` - returns the user weight information on their latest or specified profile
 - `!skills [user | profile] [profile (if user is a parameter)]` - returns the user skill information on their latest or specified profile
