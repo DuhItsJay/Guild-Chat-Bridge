@@ -25,6 +25,7 @@ class StateHandler extends EventHandler {
 		}
 
 		if (this.isAPIMessage(message) && this.minecraft.app.config.api.autoReplace) {
+			this.minecraft.app.discord.currChannel.shift()
 			this.minecraft.app.log.minecraft('New API key recieved')
 			return (this.minecraft.app.config.api.key = message.match(/(?<Key>[A-Z0-9-]{36})/i))
 		}
