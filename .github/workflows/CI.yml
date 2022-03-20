@@ -38,6 +38,7 @@ jobs:
         with:
           java-version: ${{ matrix.javaVersion }}
           java-package: jre
+          distribution: microsoft
       - name: Install Dependencies
         run: npm install
       - name: Start Tests
