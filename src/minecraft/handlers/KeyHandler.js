@@ -22,7 +22,9 @@ class KeyHandler extends EventHandler {
 		if (error.response.status == 429) {
 			return this.minecraft.app.log.error(error.response.data.global ? 'Global Throttle has been placed' : 'Key limit reached')
 		}
-		return this.minecraft.app.log.error('API Key cannot be replaced => autoReplace is set to false')
+
+		this.minecraft.app.log.error('API Key cannot be replaced => autoReplace is set to false')
+		throw new Error('Invalid API Setting: A valid key needs to be configured or autoReplace has to be turned on')
 	}
 
 	async onStatus() {
