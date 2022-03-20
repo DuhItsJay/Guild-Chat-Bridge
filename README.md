@@ -45,9 +45,12 @@ See [INSTALLATION.md](./INSTALLATION.md) for instructions on how to install and 
 
 ## What's New
 
-This is a summary of what the latest version offers!
+### Ingame Commands!
 
-Previous Versions: [CHANGELOG.md](./CHANGELOG.md)
+- `!weight [user | profile] [profile (if user is a parameter)]` - returns the user weight information on their latest or specified profile
+- `!skills [user | profile] [profile (if user is a parameter)]` - returns the user skill information on their latest or specified profile
+- `!slayers [user | profile] [profile (if user is a parameter)]` - returns the user slayer information on their latest or specified profile
+- `!dungeons [user | profile] [profile (if user is a parameter)]` - returns the user dungeon information on their latest or specified profile
 
 ## Features
 
