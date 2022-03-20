@@ -18,6 +18,8 @@ class DiscordManager extends CommunicationBridge {
 	}
 
 	connect() {
+		const Intents = Discord.Intents.FLAGS
+
 		this.client = new Discord.Client({
 			cacheGuilds: true,
 			cacheChannels: true,
@@ -25,6 +27,7 @@ class DiscordManager extends CommunicationBridge {
 			cacheRoles: true,
 			cacheEmojis: false,
 			cachePurlences: false,
+			intents: [Intents.GUILDS, Intents.GUILD_MEMBERS, Intents.GUILD_PRESENCES, Intents.GUILD_MESSAGES, Intents.GUILD_MESSAGE_TYPING],
 		})
 
 		this.client.on('ready', () => {
