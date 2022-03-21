@@ -56,7 +56,11 @@ Use these commands by calling the bot in guild chat. The bot will then whisper t
 
 ## Features
 
-> Coming Soon
+  - Ability to see Hypixel guild chat at Discord and vice versa
+  - Ability to fetch the desired player's Senither weight, dungeons data, slayers, skills and more **in game** without any mods
+  - Ability to do most of the guild commands (like /guild online, /guild list, /guild top, ...) **in Discord*
+  - Ability to moderate the guild (like /guild invite, /guild motd, /guild log, /guild ban, ...) the bot is in from Discord. *Requires Discord role to be able to use it*
+    - These also include mods being able to do normal Hypixel commands (using !o \[command]) from Discord
 
 ## Commands
 
