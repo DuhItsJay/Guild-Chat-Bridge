@@ -92,14 +92,20 @@ class DiscordManager extends CommunicationBridge {
 	onBroadcastCleanEmbed({ message, color }) {
 		this.app.log.broadcast(message, 'Event')
 
-		this.app.discord.client.channels.fetch(this.app.config.discord.channel[this.currChannel.shift()]).then(channel => {
-			channel.send({
-				embed: {
-					color: color,
-					description: message,
-				},
+		this.app.discord.client.channels
+			.fetch(this.app.config.discord.channel[this.currChannel.shift()])
+			.then(channel => {
+				channel.send({
+					embed: {
+						color: color,
+						description: message,
+					},
+				})
 			})
-		})
+			.catch(e => {
+				//ignore
+				//this will happen in scenarios where the bot will whisper in game but due to the "cannot send message twice" thing, it will crash the application
+			})
 	}
 
 	onBroadcastTitleEmbed({ message, title, color }) {
