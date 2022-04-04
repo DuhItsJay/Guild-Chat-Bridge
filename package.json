@@ -24,7 +24,7 @@
 	"homepage": "https://github.com/DuhItsJay/Guild-Chat-Bridge#readme",
 	"dependencies": {
 		"chalk": "^4.1.0",
-		"discord.js-light": "^3.5.0",
+		"discord.js-light": "^4.6.5",
 		"mineflayer": "^4.1.0"
 	}
 }
